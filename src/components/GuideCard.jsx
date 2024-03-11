@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { TwitterScore } from "./ui/twitterScore";
+import { TwitterScore } from "./ui/TwitterScore";
 
 export const GuideCard = ({ guide }) => {
   const prog = ~~(Math.random() * 100),
@@ -16,8 +16,8 @@ export const GuideCard = ({ guide }) => {
       >
         <div className="flex gap-8 w-full">
           <div className="flex flex-col flex-grow gap-2">
-            <div className="flex gap-4 text-lg cursor-default">
-              <span className="px-8 py-1 border border-[#414347] rounded-3xl">ICO</span>
+            <div className="flex gap-4 text-lg xl:text-xl cursor-default">
+              <span className="px-8 py-1 xl:px-10 xl:py-2 border border-[#414347] rounded-3xl">ICO</span>
             </div>
 
             <h2 className="mt-4 text-2xl font-semibold">"{ guide.title }"</h2>
@@ -46,7 +46,7 @@ export const GuideCard = ({ guide }) => {
         </div>
 
         <div className="flex items-end gap-8">
-          <div className="flex flex-col gap-2 w-[240px]">
+          <div className="flex flex-col gap-2 w-full">
             <div className="flex justify-between w-full px-2 text-base">
               <span>Прогресс:</span>
               <span>{ getProgress(prog, count) }%</span>

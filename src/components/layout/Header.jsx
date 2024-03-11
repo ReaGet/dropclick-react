@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from 'hooks/use-auth';
 
-export const Header = ({ isLoggedIn = false }) => {
+export const Header = () => {
   const [isNavOpened, setNavOpened] = useState(false);
+  const { isAuth } = useAuth();
 
   return (
     <header className="group fixed w-full top-0 bg-[#0B0B0B] md:bg-black border border-[#191919] md:border-none rounded-b-2xl z-20">
@@ -25,13 +27,13 @@ export const Header = ({ isLoggedIn = false }) => {
           </nav>
 
           {
-            !isLoggedIn ? (
+            !isAuth ? (
               <div className="flex items-center gap-8 text-2xl md:text-xl lg:text-[14px] text-white">
                 <a href="https://app.dropclick.pro/login">Войти</a>
                 <a className="button-outline px-6 py-4 rounded-full" href="/app">Перейти в агрегатор</a>
               </div>
             ) : (
-              <div className="flex gap-6">
+              <div className="flex gap-6 text-white"> logged in
               {/* <LayoutHeaderProfile />
               <LayoutHeaderNotifications /> */}
             </div>

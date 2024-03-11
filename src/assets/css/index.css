@@ -9,7 +9,7 @@ html {
 }
 
 .container {
-  @apply w-full lg:max-w-[1230px] xl:max-w-[1330px] px-8 sm:px-6 mx-auto;
+  @apply w-full lg:max-w-[1230px] xl:max-w-[1430px] px-8 sm:px-6 mx-auto;
 }
 
 .border-gradient {

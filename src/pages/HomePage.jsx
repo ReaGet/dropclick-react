@@ -10,9 +10,11 @@ import { useTranslation } from 'react-i18next';
 import { Header } from 'components/layout/Header';
 import { Layout } from 'layouts/default';
 import { GuideCard } from 'components/GuideCard';
+import { Select } from 'components/ui/Select';
 // import { GuideCard } from 'components/GuideCard';
 
 const HomePage = () => {
+  const { isAuth } = useAuth();
 
 //   const {isAuth, email} = useAuth();
 
@@ -77,7 +79,7 @@ const HomePage = () => {
       {
         "id": 0,
         "title": "Space ID",
-        "thumbnailUrl": "",
+        "thumbnailUrl": "https://sun9-56.userapi.com/impg/frLzqphnL-x44GsYu0niYTDqDULfQnnHAa_EXA/w0gAQ1zD3N8.jpg?size=480x563&quality=95&sign=df00f9f41a37e981ab1a68323fc7f9a9&type=album",
         "createdAt": "Fri Mar 08 2024 21:48:36 GMT+0300 (Москва, стандартное время)",
         "twitter_score": 100,
         "earned": 280,
@@ -91,7 +93,7 @@ const HomePage = () => {
       {
         "id": 1,
         "title": "Arbirtum",
-        "thumbnailUrl": "project2",
+        "thumbnailUrl": "https://sun9-12.userapi.com/impg/R__7t5t8Lyzfz4qVz8ji22RgtEsnbOyI4gM3Kg/gl9E4Jc7VXs.jpg?size=287x340&quality=95&sign=786ddefbce884333a87828b65a27ca59&type=album",
         "createdAt": "Fri Mar 08 2024 21:48:36 GMT+0300 (Москва, стандартное время)",
         "twitter_score": 200,
         "earned": 10250,
@@ -104,7 +106,7 @@ const HomePage = () => {
       {
         "id": 2,
         "title": "SUI",
-        "thumbnailUrl": "project3",
+        "thumbnailUrl": "https://sun9-79.userapi.com/impg/cJugt4XqL8wX1cKQuudb6QeSZcMEuNLaICvRPA/43OEvy1siko.jpg?size=158x187&quality=95&sign=15407a34a96e2baf82732921118f584b&type=album",
         "createdAt": "Fri Mar 08 2024 21:48:36 GMT+0300 (Москва, стандартное время)",
         "earned": 1200,
         "invested": 45,
@@ -116,7 +118,7 @@ const HomePage = () => {
       {
         "id": 3,
         "title": "Space ID",
-        "thumbnailUrl": "project4",
+        "thumbnailUrl": "https://sun9-11.userapi.com/impg/x1lH6M02DIu0Sp5Rjk0GP4xMLO4M4CF6sOXwXw/EIYFcsjLurs.jpg?size=248x306&quality=95&sign=7f3398f7448a188383c2a0d2ec36c0e4&type=album",
         "createdAt": "Fri Mar 08 2024 21:48:36 GMT+0300 (Москва, стандартное время)",
         "earned": 280,
         "invested": 10,
@@ -128,13 +130,39 @@ const HomePage = () => {
     ]
   }
 
+  const filterOptions = [
+    { title: "Сначала новые", value: "New ones first" },
+    { title: "Сначала старые", value: "The old ones first" },
+    { title: "Сначала дешевле", value: "Cheaper at first" },
+    { title: "Сначала дороже", value: "More expensive at first" },
+  ];
+
+  if (isAuth) {
+    filterOptions.push({ title: "Избранные", value: "Favorites", authed: true, });
+  }
+
   return (
     <>
       <Layout>
         <div className="container">
-          {/* {isAuth ? <Navbar email={email}/> : <Nav /> } */}
-          <div className='all'>
-            <h1>{t('All')}</h1>
+          <div className="flex flex-col gap-12 text-white">
+            <ul className="flex gap-10 text-4xl xl:text-5xl text-primary font-bold">
+              <li className="pb-3 border-b-[3px] border-current">Все</li>
+            </ul>
+
+            <div className="flex">
+              <Select
+                options={filterOptions}
+                onChange={(...args) => console.log(...args)}
+              >
+                <button className="flex items-center gap-4 pl-6 xl:pl-8 pr-8 xl:pr-10 py-4 xl:py-6 rounded-lg text-xl xl:text-2xl font-bold bg-[#15171C] outline-none hover:outline-1 hover:outline-white">
+                  <svg className="fill-white" width="24" height="24">
+                    <use xlinkHref="/assets/icons/sprites.svg#sort"></use>
+                  </svg>
+                  Фильтры
+                </button>
+              </Select>
+            </div>
           </div>
           {/* <Filtres razdel={razdel} handleChange={handleChange} isChecked={isChecked} handleChangeSort={handleChangeSort} sort={sort} isAuth={isAuth} /> */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-16">

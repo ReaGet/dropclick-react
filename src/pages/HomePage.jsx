@@ -7,14 +7,12 @@ import { Filtres } from 'components/Filtres';
 import axios from 'axios';
 
 import { useTranslation } from 'react-i18next';
-import { Header } from 'components/layout/Header';
 import { Layout } from 'layouts/default';
-import { GuideCard } from 'components/GuideCard';
-import { Select } from 'components/ui/Select';
+import { GuideList } from 'components/GuideList';
+import { Filters } from 'components/Filters';
 // import { GuideCard } from 'components/GuideCard';
 
 const HomePage = () => {
-  const { isAuth } = useAuth();
 
 //   const {isAuth, email} = useAuth();
 
@@ -72,9 +70,9 @@ const HomePage = () => {
 //       })
 //     };
 
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
-  const guides = {
+  const _guides = {
     "data": [
       {
         "id": 0,
@@ -130,16 +128,15 @@ const HomePage = () => {
     ]
   }
 
-  const filterOptions = [
-    { title: "Сначала новые", value: "New ones first" },
-    { title: "Сначала старые", value: "The old ones first" },
-    { title: "Сначала дешевле", value: "Cheaper at first" },
-    { title: "Сначала дороже", value: "More expensive at first" },
-  ];
+  const [guides, setGuides] = useState([]);
 
-  if (isAuth) {
-    filterOptions.push({ title: "Избранные", value: "Favorites", authed: true, });
-  }
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setGuides(_guides.data)
+    }, 2000);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   return (
     <>
@@ -149,29 +146,10 @@ const HomePage = () => {
             <ul className="flex gap-10 text-4xl xl:text-5xl text-primary font-bold">
               <li className="pb-3 border-b-[3px] border-current">Все</li>
             </ul>
-
-            <div className="flex">
-              <Select
-                options={filterOptions}
-                onChange={(...args) => console.log(...args)}
-              >
-                <button className="flex items-center gap-4 pl-6 xl:pl-8 pr-8 xl:pr-10 py-4 xl:py-6 rounded-lg text-xl xl:text-2xl font-bold bg-[#15171C] outline-none hover:outline-1 hover:outline-white">
-                  <svg className="fill-white" width="24" height="24">
-                    <use xlinkHref="/assets/icons/sprites.svg#sort"></use>
-                  </svg>
-                  Фильтры
-                </button>
-              </Select>
-            </div>
+            <Filters />
           </div>
           {/* <Filtres razdel={razdel} handleChange={handleChange} isChecked={isChecked} handleChangeSort={handleChangeSort} sort={sort} isAuth={isAuth} /> */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-16">
-            { 
-              guides.data.length
-                ? guides.data.map((guide) => <GuideCard key={guide.id} guide={guide}></GuideCard> )
-                : "Loading" 
-            }
-          </div>
+          <GuideList guides={guides}/>
         </div>
       </Layout>
     </>

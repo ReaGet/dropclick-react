@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams, useHistory } from 'react-router-dom';
 import { useAuth } from 'hooks/use-auth';
 import { useLocation } from 'react-router-dom';
 import { Navbar } from 'components/Navbar';
@@ -15,100 +15,102 @@ import { useTranslation } from 'react-i18next';
 import useLocalStorage from 'hooks/use-localstorage';
 
 const FullPage = () => {
+  const { id } = useParams();
+  console.log(id)
 
-  let { state } = useLocation();
+//   let { state } = useLocation();
 
-  const {isAuth, email} = useAuth();
+//   const {isAuth, email} = useAuth();
 
-  const navigate = useNavigate();
+//   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isAuth) {
-      navigate('/login');
-    }
-    if (!state) {
-      navigate('/');
-    }
-  });
+//   useEffect(() => {
+//     if (!isAuth) {
+//       navigate('/login');
+//     }
+//     if (!state) {
+//       navigate('/');
+//     }
+//   });
 
 
-  const [language, setLanguage] = useLocalStorage('language', 'ru');
+//   const [language, setLanguage] = useLocalStorage('language', 'ru');
   
-  const [full, setFull] = useState();
+//   const [full, setFull] = useState();
 
-  useEffect(() => {
-    if (language === 'en') {
-      axios
-      .post("https://dropclick.pro/base/getGuid.php", {
-        prop: state.title
-      })
-      .then(res => {
-        setFull(res.data);
-      })
-    } else if (language === 'ru') {
-      axios
-      .post("https://dropclick.pro/base/getGuidRU.php", {
-        prop: state.title
-      })
-      .then(res => {
-        setFull(res.data);
-      })
-    }
-}, [])
-
-
-const [subs, setSubs] = useState();
-
-useEffect(() => {
-  axios
-    .post("https://dropclick.pro/base/getSubs.php", {
-      email: email
-    })
-    .then(res => {
-      setSubs(res.data);
-    })
-}, [isAuth])
+//   useEffect(() => {
+//     if (language === 'en') {
+//       axios
+//       .post("https://dropclick.pro/base/getGuid.php", {
+//         prop: state.title
+//       })
+//       .then(res => {
+//         setFull(res.data);
+//       })
+//     } else if (language === 'ru') {
+//       axios
+//       .post("https://dropclick.pro/base/getGuidRU.php", {
+//         prop: state.title
+//       })
+//       .then(res => {
+//         setFull(res.data);
+//       })
+//     }
+// }, [])
 
 
+// const [subs, setSubs] = useState();
 
-  const [guid, setGuid] = useState();
-
-  useEffect(() => {
-    if (language === 'en') {
-      axios
-      .post("https://dropclick.pro/base/getInstr.php", {
-        name: state.title
-      })
-      .then(res => {
-        setGuid(res.data);
-      })
-    } else if (language === 'ru') {
-      axios
-      .post("https://dropclick.pro/base/getInstrRU.php", {
-        name: state.title
-      })
-      .then(res => {
-        setGuid(res.data);
-      })
-    }
-}, [])
+// useEffect(() => {
+//   axios
+//     .post("https://dropclick.pro/base/getSubs.php", {
+//       email: email
+//     })
+//     .then(res => {
+//       setSubs(res.data);
+//     })
+// }, [isAuth])
 
 
-const [sub, setSub] = useState();
 
-useEffect(() => {
-  axios
-    .post("https://dropclick.pro/base/getSub.php", {
-      email: email
-    })
-    .then(res => {
-      setSub(res.data);
-    })
-}, [isAuth])
+//   const [guid, setGuid] = useState();
+
+//   useEffect(() => {
+//     if (language === 'en') {
+//       axios
+//       .post("https://dropclick.pro/base/getInstr.php", {
+//         name: state.title
+//       })
+//       .then(res => {
+//         setGuid(res.data);
+//       })
+//     } else if (language === 'ru') {
+//       axios
+//       .post("https://dropclick.pro/base/getInstrRU.php", {
+//         name: state.title
+//       })
+//       .then(res => {
+//         setGuid(res.data);
+//       })
+//     }
+// }, [])
+
+
+// const [sub, setSub] = useState();
+
+// useEffect(() => {
+//   axios
+//     .post("https://dropclick.pro/base/getSub.php", {
+//       email: email
+//     })
+//     .then(res => {
+//       setSub(res.data);
+//     })
+// }, [isAuth])
 
 const { t } = useTranslation();
 
-  return (
+  /*return (
     <div>
       <Navbar email={email} />
       <div className='container'>
@@ -141,7 +143,7 @@ const { t } = useTranslation();
         </div>
       </div>
     </div>
-  )
+  )*/
 }
 
-export default FullPage
+export default FullPage;

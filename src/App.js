@@ -16,7 +16,7 @@ function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="/guide" element={<FullPage />} />
+      <Route path="/guide/:id" element={<FullPage />} />
       <Route path="/wallet" element={<WalletPage />} />
       <Route path="/account" element={<AccountPage />} />
       {/* <Route path="/favorites" element={<FavorPage />} /> */}

@@ -1,0 +1,36 @@
+@import "./fonts.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  @apply text-base scroll-smooth;
+}
+
+.container {
+  @apply w-full lg:max-w-[1230px] xl:max-w-[1330px] px-8 sm:px-6 mx-auto;
+}
+
+.border-gradient {
+  position: relative;
+}
+
+.border-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 15px;
+  border: 1px solid transparent;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.5)) border-box;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+.heading {
+  @apply text-5xl md:text-6xl lg:text-7xl;
+}
+
+.button-outline {
+  @apply border border-primary hover:border-primary-hover active:text-black hover:text-white active:bg-primary md:hover:bg-primary disabled:text-gray disabled:border-[#1E1E1E] disabled:bg-[#1E1E1E] hover:disabled:bg-[#1E1E1E] transition-colors;
+}

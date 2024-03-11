@@ -128,24 +128,21 @@ const HomePage = () => {
     ]
   }
 
-  console.log(guides.data)
   return (
     <>
       <Layout>
-        <div class="container">
+        <div className="container">
           {/* {isAuth ? <Navbar email={email}/> : <Nav /> } */}
-          <div className='margin'>
-            <div className='all'>
-              <h1>{t('All')}</h1>
-            </div>
-            {/* <Filtres razdel={razdel} handleChange={handleChange} isChecked={isChecked} handleChangeSort={handleChangeSort} sort={sort} isAuth={isAuth} /> */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 mt-16">
-              { 
-                guides.data.length
-                  ? guides.data.map((guide) => <GuideCard key={guide.id} guide={guide}></GuideCard> )
-                  : "Loading" 
-              }
-            </div>
+          <div className='all'>
+            <h1>{t('All')}</h1>
+          </div>
+          {/* <Filtres razdel={razdel} handleChange={handleChange} isChecked={isChecked} handleChangeSort={handleChangeSort} sort={sort} isAuth={isAuth} /> */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-16">
+            { 
+              guides.data.length
+                ? guides.data.map((guide) => <GuideCard key={guide.id} guide={guide}></GuideCard> )
+                : "Loading" 
+            }
           </div>
         </div>
       </Layout>

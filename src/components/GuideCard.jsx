@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { TwitterScore } from "./ui/twitterScore";
 
 export const GuideCard = ({ guide }) => {
   const prog = ~~(Math.random() * 100),
@@ -44,7 +45,7 @@ export const GuideCard = ({ guide }) => {
           </div>
         </div>
 
-        <div className="flex gap-8">
+        <div className="flex items-end gap-8">
           <div className="flex flex-col gap-2 w-[240px]">
             <div className="flex justify-between w-full px-2 text-base">
               <span>Прогресс:</span>
@@ -58,9 +59,13 @@ export const GuideCard = ({ guide }) => {
             </div>
           </div>
 
-          <div className="flex-grow">
-            {/* <UiTwitterScore :score="guide.twitter_score" :width="70" :smooth="true" :show-label-text="false"/> */}
-          </div>
+          <TwitterScore
+            score={guide.twitter_score}
+            width={100}
+            smooth={true}
+            showLabelText={false}
+            className="ml-auto"
+          ></TwitterScore>
         </div>
       </Link>
       

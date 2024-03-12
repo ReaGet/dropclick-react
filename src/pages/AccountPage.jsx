@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from 'hooks/use-auth';
 import { useLocation } from 'react-router-dom';
-import { Navbar } from 'components/Navbar';
+// import { Navbar } from 'components/Navbar';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
@@ -34,7 +34,7 @@ const AccountPage = () => {
 
   return (
     <div>
-        <Navbar email={email} />
+        {/* <Navbar email={email} /> */}
         <div className='container mt-4'> 
             <h1>{t("Office")}</h1>
             <div className='row mt-4'>

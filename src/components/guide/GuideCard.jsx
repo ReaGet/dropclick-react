@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom"
-import { TwitterScore } from "./ui/TwitterScore";
+import { TwitterScore } from "../ui/TwitterScore";
 
 export const GuideCard = ({ guide }) => {
   const prog = ~~(Math.random() * 100),
     count = 100;
-  const getProgress = (current, total) => (current / total * 100).toFixed();
+  // const getProgress = (current, total) => (current / total * 100).toFixed();
+  const getProgress = () => (parseInt(guide.progress) || 0).toFixed();
 
   return (
     <article
@@ -17,7 +18,7 @@ export const GuideCard = ({ guide }) => {
         <div className="flex gap-8 w-full">
           <div className="flex flex-col flex-grow gap-2">
             <div className="flex gap-4 text-lg xl:text-xl cursor-default">
-              <span className="px-8 py-1 xl:px-10 xl:py-2 border border-[#414347] rounded-3xl">ICO</span>
+              <span className="px-8 py-1 xl:px-10 xl:py-2 border border-[#414347] rounded-3xl">{ guide.category }</span>
             </div>
 
             <h2 className="mt-4 text-2xl font-semibold">"{ guide.title }"</h2>

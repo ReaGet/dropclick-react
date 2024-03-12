@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 
 const Form = ({title, handleClick, err}) => {
 
-    const [email, setEmail] = useState('');
-    const [pass, setPass] = useState('');
+    const [email, setEmail] = useState('rifat2125@gmail.com');
+    const [pass, setPass] = useState('qwerty');
 
     const { t } = useTranslation();
 

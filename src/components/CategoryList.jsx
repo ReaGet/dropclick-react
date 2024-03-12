@@ -42,7 +42,7 @@ export const CategoryList = ({ categories, onChange, selected}) => {
   }
 
   return (
-    <div className="flex gap-6 text-2xl">
+    <div className="flex flex-wrap gap-6 text-2xl">
       { 
         categories?.length
           ? categories.map((category) => {

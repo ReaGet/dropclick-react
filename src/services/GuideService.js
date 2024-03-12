@@ -1,11 +1,11 @@
 import axios from "axios";
 
 export default class GuideService {
-    static async getAll() {
-      const response = await axios.get("https://dropclick.pro/base/getCard.php", {
-         
-      });
-      return response;
+    static async getAll(email) {
+      return await fetch("https://dropclick.pro/base/getGuideCards.php", {
+        method: "POST",
+        body: JSON.stringify({ email }),
+      }).then(res => res.json());
     }
 
     static async getCategories() {

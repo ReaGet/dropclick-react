@@ -3,7 +3,7 @@ import { useAuth } from 'hooks/use-auth';
 import axios from 'axios';
 
 import { Layout } from 'layouts/default';
-import { GuideList } from 'components/GuideList';
+import { GuideList } from 'components/guide/GuideList';
 import { Filters } from 'components/Filters';
 import GuideService from 'services/GuideService';
 
@@ -28,19 +28,19 @@ const HomePage = () => {
 //   const isChecked = (value) => razd === value;
 
 
-  const [cards, setCards] = useState();
+//   const [cards, setCards] = useState();
 
-  useEffect(() => {
-    axios
-      .post("https://dropclick.pro/base/getCard.php", {
-        razd: razd,
-        sort: sort,
-        email: email
-      })
-      .then(res => {
-        setCards(res.data);
-      })
-}, [razd, sort, star])
+//   useEffect(() => {
+//     axios
+//       .post("https://dropclick.pro/base/getCard.php", {
+//         razd: razd,
+//         sort: sort,
+//         email: email
+//       })
+//       .then(res => {
+//         setCards(res.data);
+//       })
+// }, [razd, sort, star])
 
 //   const [razdel, setRazdel] = useState();
 
@@ -66,26 +66,25 @@ const HomePage = () => {
 //     };
   // const { isAuth } = useAuth();
 
+  const [guides, setGuides] = useState([]);
   const [filter, setFilter] = useState({
     sort: "",
     category: 0,
     search: "",
     done: false
   });
-
   const [categories, setCategories] = useState([]);
 
   const sortOptions = [
-    { title: "Сначала новые", value: "New ones first" },
-    { title: "Сначала старые", value: "The old ones first" },
-    { title: "Сначала дешевле", value: "Cheaper at first" },
-    { title: "Сначала дороже", value: "More expensive at first" },
+    { title: "Сначала новые", value: "date_desc" },
+    { title: "Сначала старые", value: "date_asc" },
+    { title: "Сначала дешевле", value: "price_asc" },
+    { title: "Сначала дороже", value: "price_desc" },
   ];
 
   if (isAuth) {
-    sortOptions.push({ title: "Избранные", value: "Favorites", authed: true, });
+    sortOptions.push({ title: "Избранные", value: "favorite", authed: true, });
   }
-
 
   useEffect(() => {
     GuideService.getCategories().then((result) => {
@@ -94,80 +93,13 @@ const HomePage = () => {
         ...result
       ]);
     });
-    // categories.push(...);
   }, []);
-  
-  // const categories = [
-  //   { id: 0, name: "Все", selected: true },
-  //   { id: 1, name: "ICO", selected: false },
-  //   { id: 2, name: "Testnet", selected: false },
-  // ];
 
-  const initialGuides = {
-    "data": [
-      {
-        "id": 0,
-        "title": "Space ID",
-        "thumbnailUrl": "https://sun9-56.userapi.com/impg/frLzqphnL-x44GsYu0niYTDqDULfQnnHAa_EXA/w0gAQ1zD3N8.jpg?size=480x563&quality=95&sign=df00f9f41a37e981ab1a68323fc7f9a9&type=album",
-        "createdAt": "Fri Mar 08 2024 21:48:36 GMT+0300 (Москва, стандартное время)",
-        "twitter_score": 100,
-        "earned": 280,
-        "invested": 10,
-        "time": 30,
-        "price": 100,
-        "progress": 70,
-        "content_short": "Tabi — модульный блокчейн L1, работающий на Cosmos и совместимый с EVM, нацелен на GameFi область",
-        "content": "<a href=\"https://twitter.com/Tabichain\" target=\"_blank\" rel=\"noopener\">Tabi</a><span>&nbsp;— модульный блокчейн L1, работающий на Cosmos и совместимый с EVM. Нацелен блокчейн преимущественно на GameFi область. С&nbsp;развитием проекта в своем X (Twitter) команда&nbsp;<a href=\"https://x.com/Tabichain/status/1764531456062390556?s=20\" target=\"_blank\" rel=\"noopener\">сообщила</a>&nbsp;о проведении тестнета в Tabi Chain.</span>"
-      },
-      {
-        "id": 1,
-        "title": "Arbirtum",
-        "thumbnailUrl": "https://sun9-12.userapi.com/impg/R__7t5t8Lyzfz4qVz8ji22RgtEsnbOyI4gM3Kg/gl9E4Jc7VXs.jpg?size=287x340&quality=95&sign=786ddefbce884333a87828b65a27ca59&type=album",
-        "createdAt": "Fri Mar 08 2024 21:48:36 GMT+0300 (Москва, стандартное время)",
-        "twitter_score": 200,
-        "earned": 10250,
-        "invested": 50,
-        "time": 2,
-        "price": 2,
-        "progress": 10,
-        "content": "<a href=\"https://twitter.com/Tabichain\" target=\"_blank\" rel=\"noopener\">Tabi</a><span>&nbsp;— модульный блокчейн L1, работающий на Cosmos и совместимый с EVM. Нацелен блокчейн преимущественно на GameFi область. С&nbsp;развитием проекта в своем X (Twitter) команда&nbsp;<a href=\"https://x.com/Tabichain/status/1764531456062390556?s=20\" target=\"_blank\" rel=\"noopener\">сообщила</a>&nbsp;о проведении тестнета в Tabi Chain.</span><p>asdfasd ashdfkj ashkdfh asdhfajs dklfasdhf asjdfl ahdflk sd</p>"
-      },
-      {
-        "id": 2,
-        "title": "SUI",
-        "thumbnailUrl": "https://sun9-79.userapi.com/impg/cJugt4XqL8wX1cKQuudb6QeSZcMEuNLaICvRPA/43OEvy1siko.jpg?size=158x187&quality=95&sign=15407a34a96e2baf82732921118f584b&type=album",
-        "createdAt": "Fri Mar 08 2024 21:48:36 GMT+0300 (Москва, стандартное время)",
-        "earned": 1200,
-        "invested": 45,
-        "time": 60,
-        "price": 0,
-        "progress": 100,
-        "content": "content"
-      },
-      {
-        "id": 3,
-        "title": "Space ID",
-        "thumbnailUrl": "https://sun9-11.userapi.com/impg/x1lH6M02DIu0Sp5Rjk0GP4xMLO4M4CF6sOXwXw/EIYFcsjLurs.jpg?size=248x306&quality=95&sign=7f3398f7448a188383c2a0d2ec36c0e4&type=album",
-        "createdAt": "Fri Mar 08 2024 21:48:36 GMT+0300 (Москва, стандартное время)",
-        "earned": 280,
-        "invested": 10,
-        "time": 2,
-        "price": 0,
-        "progress": 15,
-        "content": "content"
-      }
-    ]
-  }
-
-  const [guides, setGuides] = useState([]);
-
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(() => {
-  //     setGuides(initialGuides.data)
-  //   }, 2000);
-
-  //   return () => clearTimeout(timeoutId);
-  // }, []);
+  useEffect(() => {
+    GuideService.getAll(email).then((result) => {
+      setGuides(result);
+    });
+  }, []);
 
   return (
     <Layout>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'hooks/use-auth';
 import { useLocation } from 'react-router-dom';
-import { Navbar } from 'components/Navbar';
 import axios from 'axios';
 
 import { useTranslation } from 'react-i18next';
@@ -59,7 +58,6 @@ const WalletPage = () => {
 
   return (
     <div>
-        <Navbar email={email} wallet={state} />
         <div className='container'>
             <div style={{marginTop: '25px', border: '1px solid white', borderRadius: '15px', padding: '30px', backgroundColor: '#1d1e23'}}>
             <h3>{t("Payment and subscriptions")}</h3>

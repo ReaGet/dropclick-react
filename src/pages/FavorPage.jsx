@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from 'hooks/use-auth';
 import { useLocation } from 'react-router-dom';
-import { Navbar } from 'components/Navbar';
 
 const FavorPage = () => {
 
@@ -23,7 +22,7 @@ const FavorPage = () => {
 
   return (
     <div>
-      <Navbar email={email} />
+      {/* <Navbar email={email} /> */}
     </div>
   )
 }

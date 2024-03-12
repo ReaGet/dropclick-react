@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams, useHistory } from 'react-router-dom';
 import { useAuth } from 'hooks/use-auth';
 import { useLocation } from 'react-router-dom';
-import { Navbar } from 'components/Navbar';
 import axios from 'axios';
 
 import { CiCircleChevLeft } from "react-icons/ci";

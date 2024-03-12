@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.ec7e4717.css",
-    "main.js": "/static/js/main.19982ef1.js",
-    "static/media/Montserrat-Bold.woff2": "/static/media/Montserrat-Bold.b8c6bf231f0ce4cad3c7.woff2",
-    "static/media/Montserrat-Medium.woff2": "/static/media/Montserrat-Medium.e649a2699120c10f1515.woff2",
-    "static/media/Montserrat-SemiBold.woff2": "/static/media/Montserrat-SemiBold.54589f6cdd8d619e994c.woff2",
-    "static/media/Montserrat-Regular.woff2": "/static/media/Montserrat-Regular.812dd4640aaa4e4db7b8.woff2",
-    "static/media/Montserrat-Light.woff2": "/static/media/Montserrat-Light.3472ec58bae51d8035f7.woff2",
-    "static/media/Montserrat-Black.woff2": "/static/media/Montserrat-Black.d3520641ac856821a7b3.woff2",
+    "main.css": "/dropclick-react/static/css/main.ec7e4717.css",
+    "main.js": "/dropclick-react/static/js/main.09091125.js",
+    "static/media/Montserrat-Bold.woff2": "/dropclick-react/static/media/Montserrat-Bold.b8c6bf231f0ce4cad3c7.woff2",
+    "static/media/Montserrat-Medium.woff2": "/dropclick-react/static/media/Montserrat-Medium.e649a2699120c10f1515.woff2",
+    "static/media/Montserrat-SemiBold.woff2": "/dropclick-react/static/media/Montserrat-SemiBold.54589f6cdd8d619e994c.woff2",
+    "static/media/Montserrat-Regular.woff2": "/dropclick-react/static/media/Montserrat-Regular.812dd4640aaa4e4db7b8.woff2",
+    "static/media/Montserrat-Light.woff2": "/dropclick-react/static/media/Montserrat-Light.3472ec58bae51d8035f7.woff2",
+    "static/media/Montserrat-Black.woff2": "/dropclick-react/static/media/Montserrat-Black.d3520641ac856821a7b3.woff2",
     "index.html": "/index.html",
-    "main.ec7e4717.css.map": "/static/css/main.ec7e4717.css.map",
-    "main.19982ef1.js.map": "/static/js/main.19982ef1.js.map"
+    "main.ec7e4717.css.map": "/dropclick-react/static/css/main.ec7e4717.css.map",
+    "main.09091125.js.map": "/dropclick-react/static/js/main.09091125.js.map"
   },
   "entrypoints": [
     "static/css/main.ec7e4717.css",
-    "static/js/main.19982ef1.js"
+    "static/js/main.09091125.js"
   ]
 }

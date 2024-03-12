@@ -13,10 +13,10 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/guide/:id" element={<FullPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/dropclick-react/" element={<HomePage />} />
+      <Route path="/dropclick-react/guide/:id" element={<FullPage />} />
+      <Route path="/dropclick-react/login" element={<LoginPage />} />
+      <Route path="/dropclick-react/register" element={<RegisterPage />} />
       { /* />
       <Route path="/wallet" element={<WalletPage />} />
       <Route path="/account" element={<AccountPage />} /> */}

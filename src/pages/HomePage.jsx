@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAuth } from 'hooks/use-auth';
-import { Navbar } from 'components/Navbar';
-import { Cards } from 'components/Cards';
-import { Nav } from 'components/Nav';
-import { Filtres } from 'components/Filtres';
 import axios from 'axios';
 
 import { useTranslation } from 'react-i18next';
 import { Layout } from 'layouts/default';
 import { GuideList } from 'components/GuideList';
 import { Filters } from 'components/Filters';
-// import { GuideCard } from 'components/GuideCard';
 
 const HomePage = () => {
 
@@ -70,8 +65,15 @@ const HomePage = () => {
 //       })
 //     };
   const { isAuth } = useAuth();
-  const [filter, setFilter] = useState({ sort: "", category: 0 })
 
+  const getFilterInitial = () => ({
+    sort: "",
+    category: 0,
+    search: "",
+    done: false
+  });
+
+  const [filter, setFilter] = useState(getFilterInitial);
 
   const sortOptions = [
     { title: "Сначала новые", value: "New ones first" },
@@ -90,31 +92,9 @@ const HomePage = () => {
     { id: 2, name: "Testnet", selected: false },
   ];
 
-  // const [selectedSort, setSelectedSort] = useState(null);
-
-  // const onSortChange = (newSortOption) => {
-  //   setSelectedSort(
-  //     sortOptions.find((sortOption) => sortOption.value === newSortOption.value)
-  //   );
-  // };
-
-  // const categories = [
-  //   { id: 0, name: "Все", selected: true },
-  //   { id: 1, name: "ICO", selected: false },
-  //   { id: 2, name: "Testnet", selected: false },
-  // ];
-
-  // const [selectedCategory, setSelectedCategory] = useState(categories[0]);
-
-  // const onCategoryChange = (catgeoryId) => {
-  //   setSelectedCategory(
-  //     categories.find((category) => category.id === catgeoryId)
-  //   );
-  // };
-
   const { t } = useTranslation();
 
-  const _guides = {
+  const initialGuides = {
     "data": [
       {
         "id": 0,
@@ -169,37 +149,34 @@ const HomePage = () => {
       }
     ]
   }
-
   const [guides, setGuides] = useState([]);
+
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setGuides(_guides.data)
+      setGuides(initialGuides.data)
     }, 2000);
 
     return () => clearTimeout(timeoutId);
   }, []);
 
   return (
-    <>
-      <Layout>
-        <div className="container">
-          <div className="flex flex-col gap-12 text-white">
-            <ul className="flex gap-10 text-4xl xl:text-5xl text-primary font-bold">
-              <li className="pb-3 border-b-[3px] border-current">Все</li>
-            </ul>
-            <Filters
-              filter={filter}
-              setFilter={setFilter}
-              sortOptions={sortOptions}
-              categories={categories}
-            />
-          </div>
-          {/* <Filtres razdel={razdel} handleChange={handleChange} isChecked={isChecked} handleChangeSort={handleChangeSort} sort={sort} isAuth={isAuth} /> */}
-          <GuideList guides={guides}/>
+    <Layout>
+      <div className="container">
+        <div className="flex flex-col gap-12 text-white">
+          <ul className="flex gap-10 text-4xl xl:text-5xl text-primary font-bold">
+            <li className="pb-3 border-b-[3px] border-current">Все</li>
+          </ul>
+          <Filters
+            filter={filter}
+            setFilter={setFilter}
+            sortOptions={sortOptions}
+            categories={categories}
+          />
         </div>
-      </Layout>
-    </>
+        <GuideList guides={guides}/>
+      </div>
+    </Layout>
   )
 }
 

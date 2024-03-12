@@ -16,7 +16,7 @@ const Category = (props) => {
   return (
     <button
       className={[
-          "px-8 py-5 xl:px-10 xl:py-2 border rounded-xl transition-colors",
+          "px-8 py-4 xl:px-10 border rounded-xl transition-colors",
           selected
             ? "bg-primary text-black border-primary hover:border-primary-hover"
             : "border-[#414347] hover:border-white"
@@ -50,7 +50,7 @@ export const CategoryList = ({ categories, onChange, selected}) => {
                       onClick={handleCategoryClick}
                       key={category.id}
                       category={category}
-                      selected={selected.id === category.id}
+                      selected={selected === category.id}
                     ></Category>
           })
           : Array(3).fill(0).map((_, i) => <CategoryPreload key={i} />)

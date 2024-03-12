@@ -69,6 +69,48 @@ const HomePage = () => {
 //         setStar(event.target.value);
 //       })
 //     };
+  const { isAuth } = useAuth();
+  const [filter, setFilter] = useState({ sort: "", category: 0 })
+
+
+  const sortOptions = [
+    { title: "Сначала новые", value: "New ones first" },
+    { title: "Сначала старые", value: "The old ones first" },
+    { title: "Сначала дешевле", value: "Cheaper at first" },
+    { title: "Сначала дороже", value: "More expensive at first" },
+  ];
+
+  if (isAuth) {
+    sortOptions.push({ title: "Избранные", value: "Favorites", authed: true, });
+  }
+  
+  const categories = [
+    { id: 0, name: "Все", selected: true },
+    { id: 1, name: "ICO", selected: false },
+    { id: 2, name: "Testnet", selected: false },
+  ];
+
+  // const [selectedSort, setSelectedSort] = useState(null);
+
+  // const onSortChange = (newSortOption) => {
+  //   setSelectedSort(
+  //     sortOptions.find((sortOption) => sortOption.value === newSortOption.value)
+  //   );
+  // };
+
+  // const categories = [
+  //   { id: 0, name: "Все", selected: true },
+  //   { id: 1, name: "ICO", selected: false },
+  //   { id: 2, name: "Testnet", selected: false },
+  // ];
+
+  // const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+
+  // const onCategoryChange = (catgeoryId) => {
+  //   setSelectedCategory(
+  //     categories.find((category) => category.id === catgeoryId)
+  //   );
+  // };
 
   const { t } = useTranslation();
 
@@ -146,7 +188,12 @@ const HomePage = () => {
             <ul className="flex gap-10 text-4xl xl:text-5xl text-primary font-bold">
               <li className="pb-3 border-b-[3px] border-current">Все</li>
             </ul>
-            <Filters />
+            <Filters
+              filter={filter}
+              setFilter={setFilter}
+              sortOptions={sortOptions}
+              categories={categories}
+            />
           </div>
           {/* <Filtres razdel={razdel} handleChange={handleChange} isChecked={isChecked} handleChangeSort={handleChangeSort} sort={sort} isAuth={isAuth} /> */}
           <GuideList guides={guides}/>

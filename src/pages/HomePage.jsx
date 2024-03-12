@@ -2,24 +2,24 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useAuth } from 'hooks/use-auth';
 import axios from 'axios';
 
-import { useTranslation } from 'react-i18next';
 import { Layout } from 'layouts/default';
 import { GuideList } from 'components/GuideList';
 import { Filters } from 'components/Filters';
+import GuideService from 'services/GuideService';
 
 const HomePage = () => {
 
-//   const {isAuth, email} = useAuth();
+  const {isAuth, email} = useAuth();
 
-//   const [star, setStar] = useState();
+  const [star, setStar] = useState();
 
-//   const [razd, setRazd] = useState("all");
+  const [razd, setRazd] = useState("all");
 
 //   const handleChange = (event) => {
 //     setRazd(event.target.value);
 //   };
 
-//   const [sort, setSort] = useState("New ones first");
+  const [sort, setSort] = useState("New ones first");
 
 //   const handleChangeSort = (event) => {
 //     setSort(event.target.value);
@@ -28,31 +28,31 @@ const HomePage = () => {
 //   const isChecked = (value) => razd === value;
 
 
-//   const [cards, setCards] = useState();
+  const [cards, setCards] = useState();
 
-//   useEffect(() => {
-//     axios
-//       .post("https://dropclick.pro/base/getCard.php", {
-//         razd: razd,
-//         sort: sort,
-//         email: email
-//       })
-//       .then(res => {
-//         setCards(res.data);
-//       })
-// }, [razd, sort, star])
+  useEffect(() => {
+    axios
+      .post("https://dropclick.pro/base/getCard.php", {
+        razd: razd,
+        sort: sort,
+        email: email
+      })
+      .then(res => {
+        setCards(res.data);
+      })
+}, [razd, sort, star])
 
 //   const [razdel, setRazdel] = useState();
 
-//   useEffect(() => {
-//     fetch('https://dropclick.pro/base/getRaz.php')
-//       .then(res => res.json())
-//       .then(
-//         (result) => {
-//           setRazdel(result);
-//         }
-//       )      
-//     }, [])
+  // useEffect(() => {
+  //   fetch('https://dropclick.pro/base/getRaz.php')
+  //     .then(res => res.json())
+  //     .then(
+  //       (result) => {
+  //         setRazdel(result);
+  //       }
+  //     )      
+  //   }, [])
 
 //     const handleStar = (event) => {
 //       axios
@@ -64,16 +64,16 @@ const HomePage = () => {
 //         setStar(event.target.value);
 //       })
 //     };
-  const { isAuth } = useAuth();
+  // const { isAuth } = useAuth();
 
-  const getFilterInitial = () => ({
+  const [filter, setFilter] = useState({
     sort: "",
     category: 0,
     search: "",
     done: false
   });
 
-  const [filter, setFilter] = useState(getFilterInitial);
+  const [categories, setCategories] = useState([]);
 
   const sortOptions = [
     { title: "Сначала новые", value: "New ones first" },
@@ -85,14 +85,23 @@ const HomePage = () => {
   if (isAuth) {
     sortOptions.push({ title: "Избранные", value: "Favorites", authed: true, });
   }
-  
-  const categories = [
-    { id: 0, name: "Все", selected: true },
-    { id: 1, name: "ICO", selected: false },
-    { id: 2, name: "Testnet", selected: false },
-  ];
 
-  const { t } = useTranslation();
+
+  useEffect(() => {
+    GuideService.getCategories().then((result) => {
+      setCategories([
+        { id: 0, name: "Все", selected: true },
+        ...result
+      ]);
+    });
+    // categories.push(...);
+  }, []);
+  
+  // const categories = [
+  //   { id: 0, name: "Все", selected: true },
+  //   { id: 1, name: "ICO", selected: false },
+  //   { id: 2, name: "Testnet", selected: false },
+  // ];
 
   const initialGuides = {
     "data": [
@@ -149,16 +158,16 @@ const HomePage = () => {
       }
     ]
   }
+
   const [guides, setGuides] = useState([]);
 
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(() => {
+  //     setGuides(initialGuides.data)
+  //   }, 2000);
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setGuides(initialGuides.data)
-    }, 2000);
-
-    return () => clearTimeout(timeoutId);
-  }, []);
+  //   return () => clearTimeout(timeoutId);
+  // }, []);
 
   return (
     <Layout>

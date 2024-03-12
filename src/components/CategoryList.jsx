@@ -32,7 +32,7 @@ const Category = (props) => {
 
 const CategoryPreload = () => {
   return (
-    <button className={"loading h-[47px] px-12 rounded-xl"}></button>
+    <button className={"loading h-[42px] px-20 rounded-xl"}></button>
   );
 }
 

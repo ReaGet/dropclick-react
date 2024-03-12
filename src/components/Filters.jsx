@@ -2,7 +2,6 @@ import { Select } from "./ui/Select";
 import { CategoryList } from "./CategoryList";
 
 export const Filters = ({filter, setFilter, sortOptions, categories}) => {
-  console.log(categories)
   const buttonClasses = "flex items-center gap-4 px-6 sm:pr-8 xl:pl-8 xl:pr-10 py-4 xl:py-6 rounded-lg text-xl xl:text-2xl font-bold bg-[#15171C] transition-all duration-100";
   return (
     <div className="flex flex-col gap-8">

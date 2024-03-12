@@ -45,7 +45,7 @@ export const GuideCard = ({ guide }) => {
             />
           </div>
         </div>
-
+      { guide.date }
         <div className="flex items-end gap-8">
           <div className="flex flex-col gap-2 w-full">
             <div className="flex justify-between w-full px-2 text-base">

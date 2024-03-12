@@ -31,6 +31,8 @@
   while ($row = $result->fetch_assoc())  {
     $progress = getProgressIfEmailExists($email, $row["title"]);
     $isFavorite = getFavoriteIfEmailExists($email, $row["title"]);
+    $info = getAdditionalInfo($row["title"]);
+
     $data = [
       "id" => $row["id"],
       "title" => $row["title"],
@@ -41,12 +43,11 @@
       "category" => $row["raz"],
       "progress" => $progress,
       "isFavorite" => $isFavorite,
+      "date" => $info["date"]
     ];
 
     if ($guideId) {
-      $info = getAdditionalInfo($row["title"]);
       $data["content"] = $info["content"];
-      $data["date"] = $info["date"];
       $data["links"] = $info["links"];
       $dbdata = $data;
     } else {

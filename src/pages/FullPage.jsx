@@ -12,6 +12,9 @@ import { Accord } from 'components/Accord';
 
 import { useTranslation } from 'react-i18next';
 import useLocalStorage from 'hooks/use-localstorage';
+import { Layout } from 'layouts/default';
+import { TwitterScore } from 'components/ui/TwitterScore';
+import GuideService from 'services/GuideService';
 
 const FullPage = () => {
   const { id } = useParams();
@@ -107,42 +110,161 @@ const FullPage = () => {
 //     })
 // }, [isAuth])
 
-const { t } = useTranslation();
+// const { t } = useTranslation();
+  const {isAuth, email} = useAuth();
 
-  /*return (
-    <div>
-      <Navbar email={email} />
-      <div className='container'>
-        <div className='mt-5 mb-5'>
-          <Link type="button" className="btn btn-outline-success" to="/" style={{fontSize: '20px'}}><CiCircleChevLeft style={{fontSize: '25px', paddingBottom: '3px'}} /> {t("Back to main page")}</Link>
+  const _guide = {
+    "id": 0,
+    "title": "Space ID",
+    "thumbnailUrl": "https://sun9-56.userapi.com/impg/frLzqphnL-x44GsYu0niYTDqDULfQnnHAa_EXA/w0gAQ1zD3N8.jpg?size=480x563&quality=95&sign=df00f9f41a37e981ab1a68323fc7f9a9&type=album",
+    "createdAt": "Fri Mar 08 2024 21:48:36 GMT+0300 (Москва, стандартное время)",
+    "twitter_score": 100,
+    "earned": 280,
+    "invested": 10,
+    "time": 30,
+    "price": 100,
+    "progress": 70,
+    "content_short": "Tabi — модульный блокчейн L1, работающий на Cosmos и совместимый с EVM, нацелен на GameFi область",
+    "content": "<a href=\"https://twitter.com/Tabichain\" target=\"_blank\" rel=\"noopener\">Tabi</a><span>&nbsp;— модульный блокчейн L1, работающий на Cosmos и совместимый с EVM. Нацелен блокчейн преимущественно на GameFi область. С&nbsp;развитием проекта в своем X (Twitter) команда&nbsp;<a href=\"https://x.com/Tabichain/status/1764531456062390556?s=20\" target=\"_blank\" rel=\"noopener\">сообщила</a>&nbsp;о проведении тестнета в Tabi Chain.</span>"
+  }
+  const [guide, setGuide] = useState({});
+  const [descExpanded, setDescExpanded] = useState(false);
+  const [isLongContent, setIsLongContent] = useState(false);
+
+  useEffect(() => {
+    setIsLongContent(
+      (guide.content?.length || 0) > 425
+    );
+  }, []);
+
+  useEffect(() => {
+    try {
+      GuideService.getById({ email, guideId: id }).then((result) => {
+        console.log(result)
+        setGuide(result);
+      });
+    } catch(e) {
+      console.log("Error:", e)
+    }
+  }, []);
+
+  return (
+    <Layout>
+      <main className="text-white">
+        <div className="w-full h-[250px] mb-16 bg-[#000000] bg-[radial-gradient(#332F1F_1px,transparent_1px)] [background-size:2rem_2rem]">
         </div>
-        <div className='row'>
-          <div className='col-6'>
-            <img src={state.img} alt="" width={200} height={200} style={{borderRadius: '15px'}} />
+        <div className="container flex flex-col gap-16 text-white">
+          <div className="flex text-xl text-primary hover:text-primary-hover">
+            <Link to="/" className="flex items-center gap-6">
+              <svg className="fill-current rotate-180" width="24" height="24">
+                <use xlinkHref="/assets/icons/sprites.svg#arrow-long"></use>
+              </svg>
+              Назад к гайдам
+            </Link>
           </div>
-          <div className='col-6' id='mar'>
-            <Infos full={full} />
-            <div className='row' style={{marginLeft: '4px'}}>
-              <div className='col-3' id='time'>{state.time}</div>
-              <div className='col-3' id='money'>{state.money}</div>
+
+          <section className="flex items-start gap-16">
+            <div className="flex flex-col flex-grow">
+              <div className="flex items-end gap-6">
+                <h1 className="text-[4rem] leading-[3.6rem] font-bold">{ guide.title }</h1>
+                <span className="text-3xl leading-[1.875rem] text-[#666666]">{ guide.date }</span>
+
+                {/* <div className="ml-auto" v-if="guide?.links">
+                  links
+                </div> */}
+              </div>
+
+              <div className="flex gap-8 mt-8 text-lg text-white select-none">
+                <div className="flex items-center gap-4 px-6 py-3 bg-[#101010] rounded-xl cursor-default">
+                  <svg className="stroke-current" width="18" height="18">
+                    <use xlinkHref="/assets/icons/sprites.svg#time"></use>
+                  </svg>
+                  { guide?.time }
+                </div>
+                <div className="flex items-center gap-4 px-6 py-3 bg-[#101010] rounded-xl cursor-default">
+                  <svg className="stroke-current" width="18" height="18">
+                    <use xlinkHref="/assets/icons/sprites.svg#money"></use>
+                  </svg>
+                  { guide?.price }
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center gap-4 mt-14 text-2xl">
+                <div
+                  className={[
+                    "relative leading-snug overflow-hidden transition-all",
+                    descExpanded ? "max-h-[1000px]" : "max-h-[170px]"
+                  ].join(" ")}
+                >
+                  <div
+                    className="guide__description"
+                    dangerouslySetInnerHTML={{__html: guide?.content}}
+                  ></div>
+
+                  {isLongContent && (
+                    <div
+                      className={[
+                        "absolute w-full h-14 bottom-0 bg-gradient-to-b from-transparent to-black transition-opacity",
+                        descExpanded ? "opacity-0" : "",
+                      ].join(" ")}
+                    ></div>
+                  )}
+                </div>
+                {isLongContent && (
+                  <button
+                    onClick={() => setDescExpanded(!descExpanded)}
+                    className="mx-auto text-primary"
+                  >
+                    { (!descExpanded ? "Развернуть" : "Свернуть") }
+                  </button>
+                )}
+              
+              </div>
             </div>
-          </div>
-          <div>
-          </div>
+
+            <div className="flex flex-col gap-12 shrink-0 w-[420px] min-h-[200px] p-10 bg-[#0D0D0D] rounded-3xl text-white">
+              {
+                guide?.twitter_score_url
+                  ? (
+                    <a
+                      className="flex mr-auto text-3xl font-bold hover:text-primary-hover transition-colors"
+                      href="#"
+                      target="_blank"
+                    >
+                      Twitter score
+                      <svg className="-mt-2 stroke-current" width="18" height="18">
+                        <use xlinkHref="/assets/icons/sprites.svg#arrow-follow"></use>
+                      </svg>
+                    </a>
+                  )
+                  : (
+                    <span className="flex mr-auto text-3xl font-bold">
+                      Twitter score
+                    </span>
+                  )
+              }
+              
+              <TwitterScore score={guide?.twitter_score} width={350} smooth={true} />
+            </div>
+          </section>
+
+          {/* <UiDivider :className=s="'bg-[#2E2E2E]'" /> */}
+
+          <section className="flex w-full bg-[#0B0B0B] rounded-3xl overflow-hidden">
+            <div className="flex flex-col gap-10 w-[380px] px-8 py-12">
+              <button className="px-8 py-7 bg-[#111111] text-xl text-left rounded-3xl cursor-pointer">Получение тестовых токенов</button>
+              <button className="px-8 py-7 bg-[#111111] text-xl text-left rounded-3xl cursor-pointer">Прохождение тестнета</button>
+              <button className="px-8 py-7 bg-[#111111] text-xl text-left rounded-3xl cursor-pointer">Merkly - Создание контракта</button>
+            </div>
+            <div className="flex-grow min-h-full bg-[#111111]">
+
+            </div>
+          </section>
+
         </div>
-        <div className='container mt-5'>
-          <Description full={full}/>
-        </div>
-        <div>
-            {sub?.length > 0 ? sub.map(su => (
-                <Accordion guid={guid} date={su.date} />
-            )) : <Accord guid={guid} />
-            }
-            
-        </div>
-      </div>
-    </div>
-  )*/
+      </main>
+    </Layout>
+  )
 }
 
 export default FullPage;

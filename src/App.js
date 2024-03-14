@@ -1,6 +1,4 @@
 import { PrivateRoute } from "components/PrivateRoute";
-import { AuthContext } from "context";
-import { useAuth } from "hooks/use-auth";
 import { AuthProvider } from "hooks/useAuth";
 import AccountPage from "pages/AccountPage";
 import FavorPage from "pages/FavorPage";

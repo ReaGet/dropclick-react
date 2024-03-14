@@ -10,8 +10,6 @@ import { Description } from 'components/Description';
 import { Accordion } from 'components/Accordion';
 import { Accord } from 'components/Accord';
 
-import { useTranslation } from 'react-i18next';
-import useLocalStorage from 'hooks/use-localstorage';
 import { Layout } from 'layouts/default';
 import { TwitterScore } from 'components/ui/TwitterScore';
 import GuideService from 'services/GuideService';

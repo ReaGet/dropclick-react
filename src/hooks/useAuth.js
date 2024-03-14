@@ -1,15 +1,29 @@
 import { createContext, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
+import { auth, signInWithEmailAndPassword } from "services/Firebase";
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", null);
   const navigate = useNavigate();
 
-  const login = async (data) => {
-    setUser(data);
-    navigate("/");
+  const login = async (email, password) => {
+    try {
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+      setUser(user);
+      navigate("/");
+      return {
+        success: true,
+        data: { user },
+      };
+    } catch ({ code, message }) {
+      return {
+        success: false,
+        data: { code, message },
+      };
+    }
   };
 
   const logout = () => {

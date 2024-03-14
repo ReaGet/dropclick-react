@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "store/slices/userSlice";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "services/Firebase";
 import { useState } from "react";
 
 const Login = () => {

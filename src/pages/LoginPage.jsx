@@ -36,7 +36,7 @@ const LoginPage = () => {
       <div className="container flex items-center justify-center min-h-screen text-white">
         <div className="flex flex-col gap-28 w-full max-w-[600px] min-h-[400px] px-20 py-8 bg-[#0B0B0B] rounded-3xl">
           <div className="flex flex-col items-center">
-            <div className="mt-28 text-5xl">ВХОД</div>
+            <div className="mt-28 text-5xl">Авторизация</div>
             {/* <span className="text-2xl">Пожалуйста, введите свой логин и пароль!</span> */}
           </div>
           <form onSubmit={handleSubmit} className="flex flex-col gap-12">

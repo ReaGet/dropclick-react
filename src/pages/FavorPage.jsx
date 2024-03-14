@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from 'hooks/use-auth';
-import { useLocation } from 'react-router-dom';
+// import React, { useEffect, useState } from 'react';
+// import { Link, useNavigate } from 'react-router-dom';
+// import { useAuth } from 'hooks/use-auth';
+// import { useLocation } from 'react-router-dom';
 
-const FavorPage = () => {
+// const FavorPage = () => {
 
-  let { state } = useLocation();
+//   let { state } = useLocation();
 
-  const {isAuth, email} = useAuth();
+//   const {isAuth, email} = useAuth();
 
-  const navigate = useNavigate();
+//   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isAuth) {
-      navigate('/login');
-    }
-    if (!state) {
-      navigate('/');
-    }
-  });
+//   useEffect(() => {
+//     if (!isAuth) {
+//       navigate('/login');
+//     }
+//     if (!state) {
+//       navigate('/');
+//     }
+//   });
 
-  return (
-    <div>
-      {/* <Navbar email={email} /> */}
-    </div>
-  )
-}
+//   return (
+//     <div>
+//       {/* <Navbar email={email} /> */}
+//     </div>
+//   )
+// }
 
-export default FavorPage
+// export default FavorPage

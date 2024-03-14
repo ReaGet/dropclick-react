@@ -1,18 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams, useHistory } from 'react-router-dom';
-import { useAuth } from 'hooks/use-auth';
-import { useLocation } from 'react-router-dom';
-import axios from 'axios';
-
-import { CiCircleChevLeft } from "react-icons/ci";
-import { Infos } from 'components/Infos';
-import { Description } from 'components/Description';
-import { Accordion } from 'components/Accordion';
-import { Accord } from 'components/Accord';
+import { Link, useParams } from 'react-router-dom';
 
 import { Layout } from 'layouts/default';
 import { TwitterScore } from 'components/ui/TwitterScore';
 import GuideService from 'services/GuideService';
+import { useAuth } from 'hooks/useAuth';
 
 const FullPage = () => {
   const { id } = useParams();
@@ -109,7 +101,7 @@ const FullPage = () => {
 // }, [isAuth])
 
 // const { t } = useTranslation();
-  const {isAuth, email} = useAuth();
+  const { user } = useAuth();
 
   const _guide = {
     "id": 0,
@@ -137,7 +129,7 @@ const FullPage = () => {
 
   useEffect(() => {
     try {
-      GuideService.getById({ email, guideId: id }).then((result) => {
+      GuideService.getById({ email: user.email, guideId: id }).then((result) => {
         console.log(result)
         setGuide(result);
       });

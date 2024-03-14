@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
-import { auth, signInWithEmailAndPassword } from "services/Firebase";
+import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "services/Firebase";
 
 const AuthContext = createContext();
 
@@ -31,11 +31,20 @@ export const AuthProvider = ({ children }) => {
     navigate("/", { replace: true });
   };
 
+  const signup = async (email, password) => {
+    try {
+      const { user } = await createUserWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const value = useMemo(
     () => ({
       user,
       login,
       logout,
+      signup,
     }),
     [user]
   );

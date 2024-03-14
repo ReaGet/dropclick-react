@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import useClickOutside from "hooks/useClickOutside";
 
 const OptionEl = (props) => {
   const {
@@ -46,9 +47,11 @@ const OptionEl = (props) => {
 export const Select = (props) => {
   const {
     options = [],
-    placeholder,
-    status = "default",
-    selected,
+    justify = "left",
+    hideOnChange = true,
+    // placeholder,
+    // status = "default",
+    // selected,
     children,
     onChange,
     onClose
@@ -59,21 +62,10 @@ export const Select = (props) => {
   const placeholderRef = useRef(null);
   const [selectedItem, setSelectedItem] = useState("");
 
-  useEffect(() => {
-    const handleClick = (event) => {
-      const { target } = event;
-      if (target instanceof Node && !rootRef.current?.contains(target)) {
-        isOpen && onClose?.();
-        setIsOpen(false);
-      }
-    };
-
-    window.addEventListener("click", handleClick);
-
-    return () => {
-      window.removeEventListener("click", handleClick);
-    };
-  }, [onClose]);
+  useClickOutside(rootRef, () => {
+    isOpen && onClose?.();
+    setIsOpen(false);
+  });
 
   useEffect(() => {
     const placeholderEl = placeholderRef.current;
@@ -84,6 +76,7 @@ export const Select = (props) => {
         setIsOpen((prev) => !prev);
       }
     };
+
     placeholderEl.addEventListener("keydown", handleEnterKeyDown);
 
     return () => {
@@ -92,7 +85,7 @@ export const Select = (props) => {
   }, []);
 
   const handleOptionClick = (value) => {
-    setIsOpen(false);
+    hideOnChange && setIsOpen(false);
     onChange?.(value);
     setSelectedItem(value);
   };
@@ -112,7 +105,10 @@ export const Select = (props) => {
       </div>
       {isOpen && (
         <ul
-          className="absolute flex flex-col min-w-[240px] py-6 top-full mt-4 rounded-lg ring-1 ring-[#15171C] bg-[#0F1114] text-xl whitespace-nowrap text-white z-10"
+          className={[
+            "absolute flex flex-col min-w-[240px] py-6 top-full mt-4 rounded-lg ring-1 ring-[#15171C] bg-[#0F1114] text-xl whitespace-nowrap text-white z-10",
+            justify === "left" ? "left-0" : "right-0"
+          ].join(" ")}
         >
           {options.map((option) => (
             <OptionEl

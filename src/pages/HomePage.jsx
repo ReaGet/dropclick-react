@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth } from 'hooks/use-auth';
-import { Layout } from 'layouts/default';
-import { GuideList } from 'components/guide/GuideList';
-import { Filters } from 'components/Filters';
-import GuideService from 'services/GuideService';
-import { useGuides } from 'hooks/useGuides';
+import React, { useEffect, useState } from "react";
+import { useAuth } from "hooks/useAuth";
+import { Layout } from "layouts/default";
+import { GuideList } from "components/guide/GuideList";
+import { Filters } from "components/Filters";
+import GuideService from "services/GuideService";
+import { useGuides } from "hooks/useGuides";
 
 const HomePage = () => {
   const {isAuth, email} = useAuth();

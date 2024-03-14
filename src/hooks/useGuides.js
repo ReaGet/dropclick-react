@@ -16,7 +16,6 @@ const compareDates = (d1, d2) => {
 
 export const useSortedPosts = (guides, sort) => {
   const sortedGuides = useMemo(() => {
-    console.log(sort)
     let sortFn = null;
     switch(sort) {
       case "date_desc":

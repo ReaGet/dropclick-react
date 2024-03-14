@@ -48,7 +48,7 @@ const HomePage = () => {
   return (
     <Layout>
       <div className="container">
-        <div className="flex flex-col gap-12 lg:pt-32 text-white">
+        <div className="flex flex-col gap-12 text-white">
           <ul className="flex gap-10 text-4xl xl:text-5xl text-primary font-bold">
             <li className="pb-3 border-b-[3px] border-current">Все</li>
           </ul>

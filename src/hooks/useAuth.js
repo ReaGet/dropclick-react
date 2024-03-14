@@ -34,8 +34,21 @@ export const AuthProvider = ({ children }) => {
   const signup = async (email, password) => {
     try {
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      throw error;
+      return {
+        success: true,
+        data: {
+          user,
+          complete: () => {
+            setUser(user);
+            navigate("/");            
+          }
+        },
+      };
+    } catch ({ code, message }) {
+      return {
+        success: false,
+        data: { code, message },
+      };
     }
   };
 

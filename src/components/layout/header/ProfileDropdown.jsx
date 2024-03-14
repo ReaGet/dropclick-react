@@ -7,7 +7,7 @@ export const ProfileDropdown = () => {
   const navigate = useNavigate();
 
   const menuOptions = [
-    { value: "/profile", title: "Личный кабинет", },
+    { value: "/account", title: "Личный кабинет", },
     { value: "/settings", title: "Настройки", },
     { value: "/logout", title: "Выход", },
   ];

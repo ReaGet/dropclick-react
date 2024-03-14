@@ -7,27 +7,86 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
+  const [verificationCode, setVerificationCode] = useState("");
+  const [isVerificationCodeSend, setVerificationCodeSend] = useState(false);
   const [refCode, setRefCode] = useState("");
   const [error, setError] = useState({
     email: false,
     password: false,
+    password2: false,
+    verificationCode: false,
   });
 
-  const { login } = useAuth();
+  const [randomCode, setRandomCode] = useState((Math.floor(Math.random() * (999 - 100 + 1)) + 100).toString());
+
+  const { signup } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const { success, data } = await login(email, password);
+    if (validate()) {
+      return;
+    }
+
+    const { success, data } = await signup(email, password);
 
     if (!success) {
-      setError({
-        email: data.code === "auth/invalid-email",
-        password: data.code === "auth/invalid-credential",
-      });
+      const errors = {};
+      if (data.code === "auth/email-already-in-use") {
+        errors["email"] = "Email уже занят";
+      }
+      setError(errors);
     } else {
       setError({
-        email: "",
-        password: "",
+        email: false,
+        password: false,
+        password2: false,
+        verificationCode: false,
+      });
+
+      fetch("https://dropclick.pro/base/addUser.php", {
+        method: "POST",
+        body: JSON.stringify({
+          email: email,
+          count: refCode
+        }),
+      }).then(() => {
+        data.complete();
+      });
+    }
+  };
+
+  const validate = () => {
+    const errors = {};
+    if (!email.length) {
+      errors["email"] = "Заполните поле";
+    }
+    if (!password.length) {
+      errors["password"] = "Заполните поле";
+    }
+    if (password !== password2) {
+      errors["password2"] = "Пароли не совпадают";
+    }
+    if (!verificationCode) {
+      errors["verificationCode"] = "Введите код";
+      if (verificationCode != randomCode) {
+        errors["verificationCode"] = "Неверный код";
+      }
+    }
+    setError(errors);
+    return Object.keys(errors).length;
+  }
+
+  const sendVerificationCode = (event) => {
+    event.preventDefault();
+    if (randomCode > 0 ) {        
+      fetch("https://dropclick.pro/base/postMail.php", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          code: randomCode,
+        }),
+      }).then(() => {
+        setVerificationCodeSend(true);
       });
     }
   };
@@ -49,21 +108,27 @@ const LoginPage = () => {
                 value={email}
                 onInput={(e) => setEmail(e.target.value)}
               />
-              { error.email && <span className="mt-2 text-xl text-red-500">Неправильный логин</span>}
+              { error.email && <span className="mt-2 text-xl text-red-500">{error.email}</span>}
             </label>
-            <div className="flex gap-6">
-              <label className="flex flex-col w-auto" htmlFor="email">
+            <div className="flex items-start gap-6">
+              <label className="flex flex-col w-auto" htmlFor="verificationCode">
                 <input
                   className="w-full p-7 text-2xl placeholder:text-white rounded-xl bg-[#15171C] outline-none"
-                  id="email"
+                  id="verificationCode"
                   type="text"
-                  placeholder="Логин"
-                  value={email}
-                  onInput={(e) => setEmail(e.target.value)}
+                  placeholder="Код"
+                  value={verificationCode}
+                  onInput={(e) => setVerificationCode(e.target.value)}
                 />
-                { error.email && <span className="mt-2 text-xl text-red-500">Неправильный логин</span>}
+                { error.verificationCode && <span className="mt-2 text-xl text-red-500">{error.verificationCode}</span>}
               </label>
-              <button className="w-1/2 p-7 text-2xl rounded-xl border border-[#454b5a] outline-none hover:bg-[#454b5a]">Отправить код</button>
+              <button
+                className={[
+                  "w-1/2 p-7 text-2xl rounded-xl border outline-none",
+                  isVerificationCodeSend ? "border-primary" : "border-[#454b5a] hover:bg-[#454b5a]"
+                ].join(" ")}
+                onClick={(event) => sendVerificationCode(event)}
+              >{isVerificationCodeSend ? "Код отправлен" : "Отправить код"}</button>
             </div>
             <label className="flex flex-col w-full" htmlFor="password">
               <input
@@ -74,7 +139,7 @@ const LoginPage = () => {
                 value={password}
                 onInput={(e) => setPassword(e.target.value)}
               />
-              { error.password && <span className="mt-2 text-xl text-red-500">Неправильный пароль</span>}
+              { error.password && <span className="mt-2 text-xl text-red-500">{error.password}</span>}
             </label>
             <label className="flex flex-col w-full" htmlFor="password2">
               <input
@@ -83,9 +148,9 @@ const LoginPage = () => {
                 type="password"
                 placeholder="Повторите пароль"
                 value={password2}
-                onInput={(e) => setPassword(e.target.value)}
+                onInput={(e) => setPassword2(e.target.value)}
               />
-              { error.password && <span className="mt-2 text-xl text-red-500">Неправильный пароль</span>}
+              { error.password2 && <span className="mt-2 text-xl text-red-500">{error.password2}</span> }
             </label>
             <label className="flex flex-col w-full" htmlFor="refCode">
               <input
@@ -94,9 +159,8 @@ const LoginPage = () => {
                 type="text"
                 placeholder="Реферальный код"
                 value={refCode}
-                onInput={(e) => setPassword(e.target.value)}
+                onInput={(e) => setRefCode(e.target.value)}
               />
-              { error.password && <span className="mt-2 text-xl text-red-500">Неправильный пароль</span>}
             </label>
             <button className="button-outline px-16 py-6 mx-auto text-2xl rounded-xl">Зарегистрироваться</button>
             <div className="mt-12 mb-4 text-xl text-center">

@@ -20,7 +20,7 @@ export const Security = () => {
             >
               Старый пароль
               <input
-                className="w-full h-[44px] xl:h-[54px] px-4 sm:px-6 text-white border-none select-none outline-none bg-[#191919] focus:bg-[#272727] transition-colors rounded-lg"
+                className="w-full h-[44px] xl:h-[54px] px-4 sm:px-6 text-white border-none placeholder:text-[#4d5361] select-none outline-none bg-[#191919] focus:bg-[#272727] transition-colors rounded-lg"
                 type="password"
                 disabled
               />
@@ -30,7 +30,7 @@ export const Security = () => {
             >
               Новый пароль
               <input
-                className="w-full h-[44px] xl:h-[54px] px-4 sm:px-6 text-white border-none select-none outline-none bg-[#191919] focus:bg-[#272727] transition-colors rounded-lg"
+                className="w-full h-[44px] xl:h-[54px] px-4 sm:px-6 text-white border-none placeholder:text-[#4d5361] select-none outline-none bg-[#191919] focus:bg-[#272727] transition-colors rounded-lg"
                 type="password"
                 disabled
               />

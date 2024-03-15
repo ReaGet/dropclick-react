@@ -96,14 +96,14 @@ const LoginPage = () => {
   return (
     <LayoutEmpty>
       <div className="container flex items-center justify-center min-h-screen text-white">
-        <div className="flex flex-col gap-28 w-full max-w-[600px] min-h-[400px] px-20 py-8 bg-[#0B0B0B] rounded-3xl">
+        <div className="flex flex-col gap-28 w-full max-w-[600px] min-h-[400px] px-4 sm:px-20 py-8 sm:bg-[#0B0B0B] rounded-3xl">
           <div className="flex flex-col items-center">
             <div className="mt-28 text-5xl">Регистрация</div>
           </div>
           <form onSubmit={handleSubmit} className="flex flex-col gap-12">
             <label className="flex flex-col w-full" htmlFor="email">
               <input
-                className="w-full p-7 text-2xl placeholder:text-white rounded-xl bg-[#15171C] outline-none"
+                className="w-full p-7 text-2xl placeholder:text-[#4d5361] rounded-xl bg-[#15171C] outline-none"
                 id="email"
                 type="text"
                 placeholder="Email"
@@ -115,7 +115,7 @@ const LoginPage = () => {
             <div className="flex items-start gap-6">
               <label className="flex flex-col w-auto" htmlFor="verificationCode">
                 <input
-                  className="w-full p-7 text-2xl placeholder:text-white rounded-xl bg-[#15171C] outline-none"
+                  className="w-full p-7 text-2xl placeholder:text-[#4d5361] rounded-xl bg-[#15171C] outline-none"
                   id="verificationCode"
                   type="text"
                   placeholder="Код"
@@ -134,7 +134,7 @@ const LoginPage = () => {
             </div>
             <label className="flex flex-col w-full" htmlFor="password">
               <input
-                className="w-full p-7 text-2xl placeholder:text-white rounded-xl bg-[#15171C] outline-none"
+                className="w-full p-7 text-2xl placeholder:text-[#4d5361] rounded-xl bg-[#15171C] outline-none"
                 id="password"
                 type="password"
                 placeholder="Пароль"
@@ -145,7 +145,7 @@ const LoginPage = () => {
             </label>
             <label className="flex flex-col w-full" htmlFor="password2">
               <input
-                className="w-full p-7 text-2xl placeholder:text-white rounded-xl bg-[#15171C] outline-none"
+                className="w-full p-7 text-2xl placeholder:text-[#4d5361] rounded-xl bg-[#15171C] outline-none"
                 id="password2"
                 type="password"
                 placeholder="Повторите пароль"
@@ -156,7 +156,7 @@ const LoginPage = () => {
             </label>
             <label className="flex flex-col w-full" htmlFor="refCode">
               <input
-                className="w-full p-7 text-2xl placeholder:text-white rounded-xl bg-[#15171C] outline-none"
+                className="w-full p-7 text-2xl placeholder:text-[#4d5361] rounded-xl bg-[#15171C] outline-none"
                 id="refCode"
                 type="text"
                 placeholder="Реферальный код"

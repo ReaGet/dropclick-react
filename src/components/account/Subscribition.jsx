@@ -9,7 +9,7 @@ export const Subscribition = () => {
         >
           Дата начала подписки
           <input
-            className="w-full sm:w-1/2 h-[44px] xl:h-[54px] px-4 sm:px-6 text-white border-none select-none outline-none bg-[#191919] focus:bg-[#272727] transition-colors rounded-lg"
+            className="w-full sm:w-1/2 h-[44px] xl:h-[54px] px-4 sm:px-6 text-white border-none placeholder:text-[#4d5361] select-none outline-none bg-[#191919] focus:bg-[#272727] transition-colors rounded-lg"
             type="text"
             value="19.02.2024"
             disabled
@@ -20,7 +20,7 @@ export const Subscribition = () => {
         >
           Дата окончания подписки
           <input
-            className="w-full sm:w-1/2 h-[44px] xl:h-[54px] px-4 sm:px-6 text-white border-none select-none outline-none bg-[#191919] focus:bg-[#272727] transition-colors rounded-lg"
+            className="w-full sm:w-1/2 h-[44px] xl:h-[54px] px-4 sm:px-6 text-white border-none placeholder:text-[#4d5361] select-none outline-none bg-[#191919] focus:bg-[#272727] transition-colors rounded-lg"
             type="text"
             value="19.03.2024"
             disabled

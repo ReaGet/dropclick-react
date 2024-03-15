@@ -2,9 +2,6 @@ import { Link } from "react-router-dom"
 import { TwitterScore } from "../ui/TwitterScore";
 
 export const GuideCard = ({ guide }) => {
-  const prog = ~~(Math.random() * 100),
-    count = 100;
-  // const getProgress = (current, total) => (current / total * 100).toFixed();
   const getProgress = () => (parseInt(guide.progress) || 0).toFixed();
 
   return (
@@ -21,7 +18,7 @@ export const GuideCard = ({ guide }) => {
               <span className="px-8 py-1 xl:px-10 xl:py-2 border border-[#414347] rounded-3xl">{ guide.category }</span>
             </div>
 
-            <h2 className="mt-4 text-2xl font-semibold">"{ guide.title }"</h2>
+            <h2 className="mt-4 text-2xl font-semibold">{ guide.title }</h2>
 
             <span className="text-base text-[#A4B4C3]">3.41M participants</span>
 
@@ -50,11 +47,11 @@ export const GuideCard = ({ guide }) => {
           <div className="flex flex-col gap-2 w-full">
             <div className="flex justify-between w-full px-2 text-base">
               <span>Прогресс:</span>
-              <span>{ getProgress(prog, count) }%</span>
+              <span>{ getProgress() }%</span>
             </div>
             <div className="w-full h-8 bg-[#0F1114] rounded-lg">
               <div
-                style={{width: `${getProgress(prog, count)}%`}}
+                style={{width: `${getProgress()}%`}}
                 className="h-full bg-gradient-to-r from-[#ECCF4D] to-[#C2944E] rounded-lg"
               ></div>
             </div>

@@ -63,10 +63,18 @@
     if (!$email || !$title) {
       return 0;
     }
+    
     $result = $link->query("SELECT count(*) FROM `done` WHERE `name` = '$title' AND `email` = '$email'");
+    $tasksCount = getGuideTasksCount($title);
 
-    $row = $result->fetch_row();
-    return $row[0];
+    $doneTasks = intval($result->fetch_row()[0]);
+    return $doneTasks / $tasksCount * 100;
+  }
+  
+  function getGuideTasksCount($title) {
+    global $link;
+    $result = $link->query("SELECT count(*) FROM `guidrus` WHERE `name` = '$title'"); 
+    return intval($result->fetch_row()[0]);
   }
 
   function getFavoriteIfEmailExists($email, $title) {
@@ -89,19 +97,21 @@
     }
 
     $result = $link->query("SELECT * FROM `guidesrus` WHERE `name` = '$title'");
-    $info = [];
+    $info = [
+        "content" => "",
+        "date" => "",
+        "links" => []
+    ];
 
     while ( $row = $result->fetch_assoc())  {
-      $info = [
-        "content" => $row["description"],
-        "date" => $row["date"],
-        "links" => [
-          [ "url" => $row["website"], "icon" => "website" ],
-          [ "url" => $row["twitter"], "icon" => "twitter" ],
-          [ "url" => $row["telegram"], "icon" => "telegram" ],
-          [ "url" => $row["discord"], "icon" => "discord" ],
-        ]
-      ];
+        $info["content"] = $row["description"];
+        $info["date"] = $row["date"];
+        $info["links"] = [
+            [ "url" => $row["website"], "icon" => "website" ],
+            [ "url" => $row["twitter"], "icon" => "twitter" ],
+            [ "url" => $row["telegram"], "icon" => "telegram" ],
+            [ "url" => $row["discord"], "icon" => "discord" ],
+        ];
     }
 
     return $info;

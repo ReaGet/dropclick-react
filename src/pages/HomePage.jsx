@@ -7,7 +7,7 @@ import GuideService from "services/GuideService";
 import { useGuides } from "hooks/useGuides";
 
 const HomePage = () => {
-  const {isAuth, email} = useAuth();
+  const { user } = useAuth();
   const [guides, setGuides] = useState([]);
   const [categories, setCategories] = useState([]);
   const [filter, setFilter] = useState({
@@ -26,7 +26,7 @@ const HomePage = () => {
     { title: "Сначала дороже", value: "price_desc" },
   ];
 
-  if (isAuth) {
+  if (user) {
     sortOptions.push({ title: "Избранные", value: "favorite", authed: true, });
   }
 
@@ -40,7 +40,7 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    GuideService.getAll(email).then((result) => {
+    GuideService.getAll(user.email).then((result) => {
       setGuides(result);
     });
   }, []);

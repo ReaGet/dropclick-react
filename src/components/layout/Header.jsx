@@ -53,7 +53,7 @@ export const Header = () => {
 
         <button
           ref={rootRef}
-          className="flex md:hidden items-center justify-center w-16 h-16 text-[#666] active:text-primary border border-current rounded-lg"
+          className="flex md:hidden items-center justify-center w-16 h-16 text-white active:text-primary border border-current rounded-lg"
           onClick={() => setNavOpened(!isNavOpened)}
         >
           <svg className="stroke-current" width="24" height="24">

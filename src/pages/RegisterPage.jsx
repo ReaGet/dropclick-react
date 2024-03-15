@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { LayoutEmpty } from "layouts/empty";
 import { useAuth } from "hooks/useAuth";
@@ -20,6 +21,7 @@ const LoginPage = () => {
   const [randomCode, setRandomCode] = useState((Math.floor(Math.random() * (999 - 100 + 1)) + 100).toString());
 
   const { signup } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -50,7 +52,7 @@ const LoginPage = () => {
           count: refCode
         }),
       }).then(() => {
-        data.complete();
+        navigate("/");
       });
     }
   };
@@ -104,7 +106,7 @@ const LoginPage = () => {
                 className="w-full p-7 text-2xl placeholder:text-white rounded-xl bg-[#15171C] outline-none"
                 id="email"
                 type="text"
-                placeholder="Логин"
+                placeholder="Email"
                 value={email}
                 onInput={(e) => setEmail(e.target.value)}
               />

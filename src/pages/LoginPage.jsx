@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { LayoutEmpty } from "layouts/empty";
 import { useAuth } from "hooks/useAuth";
@@ -12,11 +13,11 @@ const LoginPage = () => {
   });
 
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { success, data } = await login(email, password);
-    console.log(success, data)
 
     if (!success) {
       setError({
@@ -28,6 +29,7 @@ const LoginPage = () => {
         email: "",
         password: "",
       });
+      navigate("/");
     }
   };
 
@@ -45,7 +47,7 @@ const LoginPage = () => {
                 className="w-full p-7 text-2xl placeholder:text-white rounded-xl bg-[#15171C] outline-none"
                 id="email"
                 type="text"
-                placeholder="Логин"
+                placeholder="Email"
                 value={email}
                 onInput={(e) => setEmail(e.target.value)}
               />

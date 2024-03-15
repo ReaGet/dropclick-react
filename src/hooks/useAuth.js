@@ -13,7 +13,6 @@ export const AuthProvider = ({ children }) => {
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
       setUser(user);
-      navigate("/");
       return {
         success: true,
         data: { user },
@@ -34,14 +33,11 @@ export const AuthProvider = ({ children }) => {
   const signup = async (email, password) => {
     try {
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
+      setUser(user);
       return {
         success: true,
         data: {
-          user,
-          complete: () => {
-            setUser(user);
-            navigate("/");            
-          }
+          user
         },
       };
     } catch ({ code, message }) {

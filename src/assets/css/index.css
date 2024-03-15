@@ -35,6 +35,15 @@ html {
   @apply border border-primary hover:border-primary-hover active:text-black hover:text-white active:bg-primary md:hover:bg-primary disabled:text-gray disabled:border-[#1E1E1E] disabled:bg-[#1E1E1E] hover:disabled:bg-[#1E1E1E] transition-colors;
 }
 
+.no-scrollbar {
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    height: 0 !important
+  }
+}
+
+
 .loading {
   background: linear-gradient(100deg, #15171C 30%, #21242c 50%, #15171C 70%);
   background-size: 400%;

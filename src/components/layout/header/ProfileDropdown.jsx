@@ -29,8 +29,8 @@ export const ProfileDropdown = () => {
       hideOnChange={false}
       onChange={handleDropdownClick}
     >
-      <div className="flex items-center justify-center w-20 h-20 rounded-full bg-[#202530] cursor-pointer hover:ring-1 ring-white transition-all z-10">
-        <svg className="fill-white" width="20" height="20">
+      <div className="flex items-center justify-center w-20 h-20 rounded-full bg-[#0B0B0B] hover:bg-[#272727] cursor-pointer transition-all z-10">
+        <svg className="fill-white" width="24" height="24">
           <use xlinkHref="/assets/icons/sprites.svg#profile"></use>
         </svg>
       </div>

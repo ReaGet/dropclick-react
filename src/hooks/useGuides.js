@@ -1,6 +1,9 @@
 import {useMemo} from "react";
 
 const getTime = (date) => new Date(Date(date)).getTime();
+const formatDate = (date) => {
+  return date.split(".").reverse().join("/");
+}
 const compareDates = (d1, d2) => {
   let date1 = new Date(d1).getTime();
   let date2 = new Date(d2).getTime();
@@ -19,10 +22,10 @@ export const useSortedPosts = (guides, sort) => {
     let sortFn = null;
     switch(sort) {
       case "date_desc":
-        sortFn = (a, b) => compareDates(a.date?.replaceAll(".", "/"), b.date?.replaceAll(".", "/"));
+        sortFn = (a, b) => compareDates(formatDate(b.date), formatDate(a.date));
       break;
       case "date_asc":
-        sortFn = (a, b) => compareDates(b.date?.replaceAll(".", "/"), a.date?.replaceAll(".", "/"));
+        sortFn = (a, b) => compareDates(formatDate(a.date), formatDate(b.date));
       break;
       case "price_asc":
         sortFn = (a, b) => parseInt(a.price) - parseInt(b.price);
@@ -35,18 +38,29 @@ export const useSortedPosts = (guides, sort) => {
     if(sortFn) {
       return [...guides].sort(sortFn);
     }
+
+    if (sort === "favorite") {
+      return guides.filter((guide) => guide.isFavorite);
+    }
+
     return guides;
   }, [sort, guides])
 
   return sortedGuides;
 }
 
-export const useGuides = (guides, sort, search) => {
+
+export const useGuides = (guides, sort, search, done) => {
   const sortedGuides = useSortedPosts(guides, sort);
 
   const sortedAndSearchedGuides = useMemo(() => {
-    return sortedGuides.filter(guide => guide.title.toLowerCase().includes(search.toLowerCase()))
-  }, [search, sortedGuides])
+    return sortedGuides.filter(guide => {
+      if (done) {
+        return guide.progress === 100 && guide.title.toLowerCase().includes(search.toLowerCase())
+      }
+      return guide.title.toLowerCase().includes(search.toLowerCase())
+    });
+  }, [search, sortedGuides, done])
 
   return sortedAndSearchedGuides;
 }

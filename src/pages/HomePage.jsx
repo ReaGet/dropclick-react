@@ -17,7 +17,7 @@ const HomePage = () => {
     done: false
   });
 
-  const sortedAndSearchedGuides = useGuides(guides, filter.sort, filter.search);
+  const sortedAndSearchedGuides = useGuides(guides, filter.sort, filter.search, filter.done);
 
   const sortOptions = [
     { title: "Сначала новые", value: "date_desc" },
@@ -27,7 +27,7 @@ const HomePage = () => {
   ];
 
   if (user) {
-    sortOptions.push({ title: "Избранные", value: "favorite", authed: true, });
+    sortOptions.push({ title: "Избранные", value: "favorite" });
   }
 
   useEffect(() => {
@@ -41,6 +41,7 @@ const HomePage = () => {
 
   useEffect(() => {
     GuideService.getAll(user.email).then((result) => {
+      console.log(result)
       setGuides(result);
     });
   }, []);

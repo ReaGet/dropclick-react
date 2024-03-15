@@ -10,8 +10,6 @@ export const Header = () => {
   const { user } = useAuth();
   const location = useLocation();
 
-  console.log(location)
-  
   useClickOutside(rootRef, () => {
     setNavOpened(false);
   });

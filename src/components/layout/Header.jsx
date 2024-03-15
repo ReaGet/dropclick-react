@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { useAuth } from 'hooks/useAuth';
+import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "hooks/useAuth";
 import { ProfileDropdown } from "./header/ProfileDropdown";
 import useClickOutside from "hooks/useClickOutside";
 
@@ -8,6 +8,9 @@ export const Header = () => {
   const [isNavOpened, setNavOpened] = useState(false);
   const rootRef = useRef(null);
   const { user } = useAuth();
+  const location = useLocation();
+
+  console.log(location)
   
   useClickOutside(rootRef, () => {
     setNavOpened(false);
@@ -40,13 +43,15 @@ export const Header = () => {
           {!user && (
             <div className="flex items-center gap-8 text-2xl md:text-xl lg:text-[14px] text-white">
               <Link className="button-outline px-6 py-4 rounded-full" to="/login">Войти</Link>
-              { false && <a className="button-outline px-6 py-4 rounded-full" href="/app">Перейти в агрегатор</a> }
             </div>
           )}
+          
+          { location.pathname !== "/" && <Link className="button-outline md:hidden px-6 py-4 rounded-full text-2xl md:text-xl lg:text-[14px] text-white" tp="/">Перейти в агрегатор</Link> }
         </div>
 
         {user && (
-          <div className="flex gap-6 text-white">
+          <div className="flex items-center gap-6 text-white">
+            { location.pathname !== "/" && <Link className="button-outline hidden md:flex px-6 py-4 rounded-full text-2xl md:text-xl" to="/">Перейти в агрегатор</Link> }
             <ProfileDropdown></ProfileDropdown>
           </div>
         )}

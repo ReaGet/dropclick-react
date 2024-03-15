@@ -48,12 +48,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const updatePassword = async (email, oldPassword, newPassword) => {
+    console.log(auth.currentUser)
+  };
+
   const value = useMemo(
     () => ({
       user,
       login,
       logout,
       signup,
+      updatePassword
     }),
     [user]
   );

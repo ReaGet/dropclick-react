@@ -4,54 +4,47 @@ import { Layout } from 'layouts/default';
 import { PersonalInfo } from 'components/account/PersonalInfo';
 import { Subscribition } from 'components/account/Subscribition';
 import { Security } from 'components/account/Security';
+import SubscribitionService from 'services/Subscribition';
 
 const AccountPage = () => {
   const [currentTab, setCurrentTab] = useState("personal-info");
   const { user } = useAuth();
 
+  const [userSubscribition, setUserSubscribition] = useState({ date: "", nach: ""});
 
-  // useEffect(() => {
-  //   if (!isAuth) {
-  //     navigate('/login');
-  //   }
-  // });
+  useEffect(() => {
+    SubscribitionService.getByEmail(user.email).then((result) => {
+      setUserSubscribition({
+        ...userSubscribition,
+        ...result[0],
+      });
+    });
+  }, []);
 
-  const [date, setDate] = useState();
+  const TABS = {
+    PERSONAL: "personal-info",
+    SUBS: "subscribition",
+    SECURITY: "security",
+  }
 
-  // useEffect(() => {
-  //   axios
-  //     .post("https://dropclick.pro/base/getSubs.php", {
-  //       email: email
-  //     })
-  //     .then(res => {
-  //       setDate(res.data);
-  //     })
-  // }, [isAuth])
-
-const TABS = {
-  PERSONAL: "personal-info",
-  SUBS: "subscribition",
-  SECURITY: "security",
-}
-
-const tabStyles = "px-8 py-7 hover:bg-[#111111] text-left rounded-xl cursor-pointer";
-const tabs = [
-  {
-    title: "Личная информация",
-    slug: TABS.PERSONAL,
-    component: <PersonalInfo />,
-  },
-  {
-    title: "Подписка",
-    slug: TABS.SUBS,
-    component: <Subscribition />,
-  },
-  {
-    title: "Безопасность",
-    slug: TABS.SECURITY,
-    component: <Security />,
-  },
-];
+  const tabStyles = "px-8 py-7 hover:bg-[#111111] text-left rounded-xl cursor-pointer";
+  const tabs = [
+    {
+      title: "Личная информация",
+      slug: TABS.PERSONAL,
+      component: <PersonalInfo />,
+    },
+    {
+      title: "Подписка",
+      slug: TABS.SUBS,
+      component: <Subscribition subscribition={userSubscribition} />,
+    },
+    {
+      title: "Безопасность",
+      slug: TABS.SECURITY,
+      component: <Security />,
+    },
+  ];
 
   return (
     <Layout>
@@ -63,7 +56,7 @@ const tabs = [
                 <use xlinkHref="/assets/icons/sprites.svg#profile"></use>
               </svg>
             </div>
-            <span className="text-xl">rifat2125@gmail.com</span>
+            <span className="text-xl">{ user.email }</span>
           </div>
           <ul className="flex md:flex-col gap-4 w-full text-2xl whitespace-nowrap">
             { tabs.map((tab) => {

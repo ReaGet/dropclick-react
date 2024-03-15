@@ -3,12 +3,12 @@ import { Select } from "components/ui/Select";
 import { useAuth } from "hooks/useAuth";
 
 export const ProfileDropdown = () => {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
   const menuOptions = [
     { value: "/account", title: "Личный кабинет", },
-    { value: "/settings", title: "Настройки", },
+    // { value: "/settings", title: "Настройки", },
     { value: "/logout", title: "Выход", },
   ];
 

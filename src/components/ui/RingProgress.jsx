@@ -1,6 +1,21 @@
-export const TwitterScore = ({ score = 0, width = 350, showScoreText = true, showLabelText = true, smooth = true, className = "" }) => {
+import { useEffect, useState } from "react";
 
-  const getPercents = () => Math.min(1, Math.max(0, (score / 1000)));
+export const RingProgress = (props) => {
+  const {
+    value = 0,
+    maxValue = 100,
+    width = 350,
+    scoreTextClassname = "",
+    labelTextClassname = "",
+    labelText,
+    showScoreText = true,
+    smooth = true,
+    className = ""
+  } = props;
+
+  const [labelTextValue, setLabelTextValue] = useState("");
+  
+  const getPercents = () => Math.min(1, Math.max(0, (value / maxValue)));
 
   const getScale = () => width / 350;
   
@@ -9,22 +24,10 @@ export const TwitterScore = ({ score = 0, width = 350, showScoreText = true, sho
   const wrapperHeight = () => getScale() * 190;
 
   const scoreHeight = () => getScale() * 160;
-
-  const scoreTextStyles = () => {
-    const scale = getScale();
-    return {
-      fontSize: `${scale * 5}rem`,
-      lineHeight: `${scale * 4}rem`,
-    }
-  };
-
-  const scoreLabelTextStyles = () => {
-    const scale = getScale();
-    return {
-      fontSize: `${Math.max(0.8, scale * 1.5)}rem`,
-      lineHeight: `${scale * 2}rem`,
-    }
-  };
+  
+  useEffect(() => {
+    if (labelText) setLabelTextValue(labelText(value))
+  }, []);
 
   const twToOffest = () => 1000 - 500 * getPercents();
 
@@ -72,17 +75,17 @@ export const TwitterScore = ({ score = 0, width = 350, showScoreText = true, sho
       </svg>
 
       <div
-        className={"absolute flex flex-col items-center justify-center gap-2 bottom-0 " + (transitionClass())}
+        className={"absolute flex flex-col items-center justify-center gap-1 bottom-0 " + (transitionClass())}
         style={{ height: `${scoreHeight()}px`}}
       >
         {
           showScoreText
-            ? (<span className="font-bold" style={scoreTextStyles()}>{ score }</span>)
+            ? (<span className={["font-bold", scoreTextClassname].join(" ")}>{ value }</span>)
             : ""
         }
         {
-          showLabelText
-            ? (<span style={scoreLabelTextStyles()}>Слабо</span>)
+          labelTextValue
+            ? (<span className={labelTextClassname}>{ labelTextValue }</span>)
             : ""
         }
       </div>

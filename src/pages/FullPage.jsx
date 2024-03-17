@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { Layout } from 'layouts/default';
-import { TwitterScore } from 'components/ui/TwitterScore';
+import { RingProgress } from 'components/ui/RingProgress';
 import GuideService from 'services/GuideService';
 import { useAuth } from 'hooks/useAuth';
 
@@ -234,7 +234,17 @@ const FullPage = () => {
                   )
               }
               
-              <TwitterScore score={guide?.twitter_score} width={350} smooth={true} />
+              <RingProgress
+                value={guide?.twitter_score}
+                maxValue={100}
+                width={350}
+                smooth={true}
+                labelText={(value) => {
+                  if (value < 50) return "Слабо";
+                  if (value < 70) return "Средне";
+                  return "Отлично";
+                }}
+              />
             </div>
           </section>
 

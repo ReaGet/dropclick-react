@@ -14,6 +14,8 @@ const HomePage = () => {
   const [categories, setCategories] = useState([]);
   const [isGuidesLoading, setIsGuidesLoading] = useState(false);
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(false);
+  const [favoriteGuides, setFavoriteGuides] = useState({});
+
   const [filter, setFilter] = useState({
     sort: "",
     category: { id: 0, name: "Все" },
@@ -48,10 +50,28 @@ const HomePage = () => {
   useEffect(() => {
     setIsGuidesLoading(true);
     GuideService.getAll(user?.email).then((result) => {
+      
+      setFavoriteGuides(result.reduce((_favoriteGuides, {id, isFavorite}) => {
+        _favoriteGuides[id] = isFavorite;
+        return _favoriteGuides;
+      }, {}));
+
       setGuides(result);
       setIsGuidesLoading(false);
     });
   }, []);
+
+  const onFavoriteChange = (guide) => {
+    GuideService.setGuideFavorite({
+      email: user.email,
+      name: guide.title
+    }).then(({ status = false }) => {
+      setFavoriteGuides({
+        ...favoriteGuides,
+        [guide.id]: status,
+      });
+    });
+  };
 
   return (
     <Layout>
@@ -73,6 +93,8 @@ const HomePage = () => {
               ? <GuideList
                   isGuidesLoading={isGuidesLoading}
                   guides={sortedAndSearchedGuides}
+                  onFavoriteChange={onFavoriteChange}
+                  favoriteGuides={favoriteGuides}
                 />
               : <div className="flex flex-col items-center justify-center gap-12 pt-32 pb-8">
                   <svg className="fill-[#15171C]" width="60" height="60" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

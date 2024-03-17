@@ -37,20 +37,20 @@ html {
 
 .scrollbar {
   overflow-x: auto;
-  &::-webkit-scrollbar-thumb {
-    background: #917f30;
-    border-radius: 3px;
-  }
+}
 
-  &::-webkit-scrollbar-track {
-    background: #2f2f2f;
-    border-radius: 3px;
-  }
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #917f30;
+  border-radius: 3px;
+}
 
-  &::-webkit-scrollbar {
-    height: 4px;
-  }
+.scrollbar::-webkit-scrollbar-track {
+  background: #2f2f2f;
+  border-radius: 3px;
+}
 
+.scrollbar::-webkit-scrollbar {
+  height: 4px;
 }
 
 .loading {

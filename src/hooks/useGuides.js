@@ -1,9 +1,9 @@
 import {useMemo} from "react";
 
-const getTime = (date) => new Date(Date(date)).getTime();
 const formatDate = (date) => {
   return date.split(".").reverse().join("/");
 }
+
 const compareDates = (d1, d2) => {
   let date1 = new Date(d1).getTime();
   let date2 = new Date(d2).getTime();
@@ -17,7 +17,7 @@ const compareDates = (d1, d2) => {
   }
 };
 
-export const useSortedPosts = (guides, sort) => {
+export const useSortedGuides = (guides, sort) => {
   const sortedGuides = useMemo(() => {
     let sortFn = null;
     switch(sort) {
@@ -47,11 +47,25 @@ export const useSortedPosts = (guides, sort) => {
   }, [sort, guides])
 
   return sortedGuides;
-}
+};
 
+export const useFilteredByCategoryGuides = (guides, category) => {
+  const filteredGuides = useMemo(() => {
+    if (category.id === 0) {
+      return guides;
+    }
 
-export const useGuides = (guides, sort, search, done) => {
-  const sortedGuides = useSortedPosts(guides, sort);
+    return guides.filter((guide) => {
+      return guide.category.toLowerCase() === category.name.toLowerCase();
+    });
+  }, [guides, category]);
+
+  return filteredGuides;
+};
+
+export const useGuides = (guides, { sort, search, done, category }) => {
+  const filteredGuides = useFilteredByCategoryGuides(guides, category);
+  const sortedGuides = useSortedGuides(filteredGuides, sort);
 
   const sortedAndSearchedGuides = useMemo(() => {
     return sortedGuides.filter(guide => {
@@ -63,4 +77,4 @@ export const useGuides = (guides, sort, search, done) => {
   }, [search, sortedGuides, done])
 
   return sortedAndSearchedGuides;
-}
+};

@@ -7,6 +7,7 @@ import { useAuth } from "hooks/useAuth";
 import GuideService from "services/GuideService";
 import { FavoriteButton } from "components/ui/FavoriteButton";
 import { GuideLinks } from "components/guide/GuideLinks";
+import { ScrollToTop } from "components/ScrollTop";
 
 const FullPage = () => {
   const { id } = useParams();
@@ -137,11 +138,12 @@ const FullPage = () => {
 
   return (
     <Layout>
+      <ScrollToTop />
       <main className="-mt-28 md:-mt-40 text-white">
         <div className="flex items-center justify-center w-full h-[250px] mb-16 bg-[#000000] bg-[radial-gradient(#332F1F_1px,transparent_1px)] [background-size:2rem_2rem]">
           <div className="w-56 h-56 rounded-xl overflow-hidden">
             <img
-              className="w-full h-full object-contain"
+              className="w-full h-full object-cover"
               src={guide.thumbnailUrl}
               alt={guide.title}
               loading="lazy"

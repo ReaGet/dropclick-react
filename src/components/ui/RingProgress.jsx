@@ -14,7 +14,7 @@ export const RingProgress = (props) => {
   } = props;
 
   const [labelTextValue, setLabelTextValue] = useState("");
-  
+
   const getPercents = () => Math.min(1, Math.max(0, (value / maxValue)));
 
   const getScale = () => width / 350;
@@ -27,7 +27,7 @@ export const RingProgress = (props) => {
   
   useEffect(() => {
     if (labelText) setLabelTextValue(labelText(value))
-  }, []);
+  }, [value]);
 
   const twToOffest = () => 1000 - 500 * getPercents();
 

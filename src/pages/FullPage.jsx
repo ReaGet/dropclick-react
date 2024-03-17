@@ -3,12 +3,13 @@ import { Link, useParams } from 'react-router-dom';
 
 import { Layout } from 'layouts/default';
 import { RingProgress } from 'components/ui/RingProgress';
-import GuideService from 'services/GuideService';
 import { useAuth } from 'hooks/useAuth';
+import GuideService from 'services/GuideService';
+import { FavoriteButton } from 'components/ui/FavoriteButton';
+import { GuideLinks } from 'components/guide/GuideLinks';
 
 const FullPage = () => {
   const { id } = useParams();
-  console.log(id)
 
 //   let { state } = useLocation();
 
@@ -103,34 +104,21 @@ const FullPage = () => {
 // const { t } = useTranslation();
   const { user } = useAuth();
 
-  const _guide = {
-    "id": 0,
-    "title": "Space ID",
-    "thumbnailUrl": "https://sun9-56.userapi.com/impg/frLzqphnL-x44GsYu0niYTDqDULfQnnHAa_EXA/w0gAQ1zD3N8.jpg?size=480x563&quality=95&sign=df00f9f41a37e981ab1a68323fc7f9a9&type=album",
-    "createdAt": "Fri Mar 08 2024 21:48:36 GMT+0300 (Москва, стандартное время)",
-    "twitter_score": 100,
-    "earned": 280,
-    "invested": 10,
-    "time": 30,
-    "price": 100,
-    "progress": 70,
-    "content_short": "Tabi — модульный блокчейн L1, работающий на Cosmos и совместимый с EVM, нацелен на GameFi область",
-    "content": "<a href=\"https://twitter.com/Tabichain\" target=\"_blank\" rel=\"noopener\">Tabi</a><span>&nbsp;— модульный блокчейн L1, работающий на Cosmos и совместимый с EVM. Нацелен блокчейн преимущественно на GameFi область. С&nbsp;развитием проекта в своем X (Twitter) команда&nbsp;<a href=\"https://x.com/Tabichain/status/1764531456062390556?s=20\" target=\"_blank\" rel=\"noopener\">сообщила</a>&nbsp;о проведении тестнета в Tabi Chain.</span>"
-  }
   const [guide, setGuide] = useState({});
   const [descExpanded, setDescExpanded] = useState(false);
   const [isLongContent, setIsLongContent] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(guide.isFavorite);
 
   useEffect(() => {
     setIsLongContent(
       (guide.content?.length || 0) > 425
     );
-  }, []);
+  }, [guide]);
 
   useEffect(() => {
     try {
       GuideService.getById({ email: user.email, guideId: id }).then((result) => {
-        console.log(result)
+        setIsFavorite(result.isFavorite);
         setGuide(result);
       });
     } catch(e) {
@@ -138,11 +126,29 @@ const FullPage = () => {
     }
   }, []);
 
+  const handleFavoriteClick = async (event) => {
+    GuideService.setGuideFavorite({
+      email: user.email,
+      name: guide.title
+    }).then(({ status = false }) => {
+      setIsFavorite(status);
+    });
+  };
+
   return (
     <Layout>
-      <main className="text-white">
-        <div className="w-full h-[250px] mb-16 bg-[#000000] bg-[radial-gradient(#332F1F_1px,transparent_1px)] [background-size:2rem_2rem]">
+      <main className="-mt-28 md:-mt-40 text-white">
+        <div className="flex items-center justify-center w-full h-[250px] mb-16 bg-[#000000] bg-[radial-gradient(#332F1F_1px,transparent_1px)] [background-size:2rem_2rem]">
+          <div className="w-56 h-56 rounded-xl overflow-hidden">
+            <img
+              className="w-full h-full object-contain"
+              src={guide.thumbnailUrl}
+              alt={guide.title}
+              loading="lazy"
+            />
+          </div>
         </div>
+
         <div className="container flex flex-col gap-16 text-white">
           <div className="flex text-xl text-primary hover:text-primary-hover">
             <Link to="/" className="flex items-center gap-6">
@@ -159,12 +165,13 @@ const FullPage = () => {
                 <h1 className="text-[4rem] leading-[3.6rem] font-bold">{ guide.title }</h1>
                 <span className="text-3xl leading-[1.875rem] text-[#666666]">{ guide.date }</span>
 
-                {/* <div className="ml-auto" v-if="guide?.links">
-                  links
-                </div> */}
+                <div className="flex items-center gap-20 ml-auto">
+                  <GuideLinks links={guide.links}/>
+                  <FavoriteButton isFavorite={isFavorite} width={32} height={32} onClick={handleFavoriteClick} />
+                </div>
               </div>
 
-              <div className="flex gap-8 mt-8 text-lg text-white select-none">
+              <div className="flex gap-8 mt-8 text-lg text-white select-none whitespace-nowrap">
                 <div className="flex items-center gap-4 px-6 py-3 bg-[#101010] rounded-xl cursor-default">
                   <svg className="stroke-current" width="18" height="18">
                     <use xlinkHref="/assets/icons/sprites.svg#time"></use>
@@ -179,7 +186,7 @@ const FullPage = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center gap-4 mt-14 text-2xl">
+              <div className="flex flex-col items-center gap-4 mt-14 text-2xl text-[#e4e4e4]">
                 <div
                   className={[
                     "relative leading-snug overflow-hidden transition-all",
@@ -239,6 +246,8 @@ const FullPage = () => {
                 maxValue={100}
                 width={350}
                 smooth={true}
+                scoreTextClassname={"text-[50px] font-semibold"}
+                labelTextClassname={"text-[18px] leading-[8px] font-semibold"}
                 labelText={(value) => {
                   if (value < 50) return "Слабо";
                   if (value < 70) return "Средне";

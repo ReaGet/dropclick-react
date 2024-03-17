@@ -16,7 +16,7 @@ export const Header = () => {
 
   return (
     <header className="group fixed w-full top-0 bg-[#0B0B0B] md:bg-black border border-[#191919] md:border-none rounded-b-2xl z-20">
-      <div className="container flex items-center md:justify-between flex-wrap gap-10 md:gap-0 py-6 md:py-14">
+      <div className="container flex items-center md:justify-between flex-wrap gap-8 sm:gap-10 md:gap-0 py-6 md:py-14">
         <Link className="mr-auto md:mr-0 text-4xl text-white font-semibold" to="/">
           DROP<span className="text-primary">CLICK</span>
         </Link>

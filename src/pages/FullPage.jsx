@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
-import { Layout } from 'layouts/default';
-import { RingProgress } from 'components/ui/RingProgress';
-import { useAuth } from 'hooks/useAuth';
-import GuideService from 'services/GuideService';
-import { FavoriteButton } from 'components/ui/FavoriteButton';
-import { GuideLinks } from 'components/guide/GuideLinks';
+import { Layout } from "layouts/default";
+import { RingProgress } from "components/ui/RingProgress";
+import { useAuth } from "hooks/useAuth";
+import GuideService from "services/GuideService";
+import { FavoriteButton } from "components/ui/FavoriteButton";
+import { GuideLinks } from "components/guide/GuideLinks";
 
 const FullPage = () => {
   const { id } = useParams();
@@ -19,20 +19,20 @@ const FullPage = () => {
 
 //   useEffect(() => {
 //     if (!isAuth) {
-//       navigate('/login');
+//       navigate("/login");
 //     }
 //     if (!state) {
-//       navigate('/');
+//       navigate("/");
 //     }
 //   });
 
 
-//   const [language, setLanguage] = useLocalStorage('language', 'ru');
+//   const [language, setLanguage] = useLocalStorage("language", "ru");
   
 //   const [full, setFull] = useState();
 
 //   useEffect(() => {
-//     if (language === 'en') {
+//     if (language === "en") {
 //       axios
 //       .post("https://dropclick.pro/base/getGuid.php", {
 //         prop: state.title
@@ -40,7 +40,7 @@ const FullPage = () => {
 //       .then(res => {
 //         setFull(res.data);
 //       })
-//     } else if (language === 'ru') {
+//     } else if (language === "ru") {
 //       axios
 //       .post("https://dropclick.pro/base/getGuidRU.php", {
 //         prop: state.title
@@ -69,7 +69,7 @@ const FullPage = () => {
 //   const [guid, setGuid] = useState();
 
 //   useEffect(() => {
-//     if (language === 'en') {
+//     if (language === "en") {
 //       axios
 //       .post("https://dropclick.pro/base/getInstr.php", {
 //         name: state.title
@@ -77,7 +77,7 @@ const FullPage = () => {
 //       .then(res => {
 //         setGuid(res.data);
 //       })
-//     } else if (language === 'ru') {
+//     } else if (language === "ru") {
 //       axios
 //       .post("https://dropclick.pro/base/getInstrRU.php", {
 //         name: state.title
@@ -150,22 +150,24 @@ const FullPage = () => {
         </div>
 
         <div className="container flex flex-col gap-16 text-white">
-          <div className="flex text-xl text-primary hover:text-primary-hover">
+          <div className="flex text-lg lg:text-xl text-primary hover:text-primary-hover">
             <Link to="/" className="flex items-center gap-6">
-              <svg className="fill-current rotate-180" width="24" height="24">
+              <svg className="fill-current rotate-180 w-8 h-8 lg:w-auto lg:h-auto" width="24" height="24">
                 <use xlinkHref="/assets/icons/sprites.svg#arrow-long"></use>
               </svg>
               Назад к гайдам
             </Link>
           </div>
 
-          <section className="flex items-start gap-16">
+          <section className="flex flex-col md:flex-row items-start gap-16">
             <div className="flex flex-col flex-grow">
-              <div className="flex items-end gap-6">
-                <h1 className="text-[4rem] leading-[3.6rem] font-bold">{ guide.title }</h1>
-                <span className="text-3xl leading-[1.875rem] text-[#666666]">{ guide.date }</span>
+              <div className="flex items-start">
+                <div className="flex flex-col md:flex-row items-start md:items-end gap-2 md:gap-4">
+                  <h1 className="text-4xl lg:text-[4rem] lg:leading-[3.6rem] font-bold">{ guide.title }</h1>
+                  <span className="text-2xl lg:text-3xl leading-[1.875rem] text-[#666666]">{ guide.date }</span>
+                </div>
 
-                <div className="flex items-center gap-20 ml-auto">
+                <div className="flex items-center gap-10 lg:gap-20 ml-auto">
                   <GuideLinks links={guide.links}/>
                   <FavoriteButton isFavorite={isFavorite} width={32} height={32} onClick={handleFavoriteClick} />
                 </div>
@@ -186,7 +188,7 @@ const FullPage = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center gap-4 mt-14 text-2xl text-[#e4e4e4]">
+              <div className="flex flex-col items-center gap-4 mt-14 text-xl lg:text-2xl text-[#e4e4e4]">
                 <div
                   className={[
                     "relative leading-snug overflow-hidden transition-all",
@@ -215,16 +217,15 @@ const FullPage = () => {
                     { (!descExpanded ? "Развернуть" : "Свернуть") }
                   </button>
                 )}
-              
               </div>
             </div>
 
-            <div className="flex flex-col gap-12 shrink-0 w-[420px] min-h-[200px] p-10 bg-[#0D0D0D] rounded-3xl text-white">
+            <div className="flex flex-col gap-8 lg:gap-12 shrink-0 w-full md:w-[350px] lg:w-[420px] min-h-[200px] p-10 bg-[#0D0D0D] rounded-3xl text-white">
               {
                 guide?.twitter_score_url
                   ? (
                     <a
-                      className="flex mr-auto text-3xl font-bold hover:text-primary-hover transition-colors"
+                      className="flex mr-auto text-2xl lg:text-3xl font-bold hover:text-primary-hover transition-colors"
                       href="#"
                       target="_blank"
                     >
@@ -235,7 +236,7 @@ const FullPage = () => {
                     </a>
                   )
                   : (
-                    <span className="flex mr-auto text-3xl font-bold">
+                    <span className="flex mr-auto text-2xl lg:text-3xl font-bold">
                       Twitter score
                     </span>
                   )
@@ -246,6 +247,7 @@ const FullPage = () => {
                 maxValue={100}
                 width={350}
                 smooth={true}
+                ringClassname={"w-full max-w-[320px] xs:max-w-full xs:w-auto"}
                 scoreTextClassname={"text-[50px] font-semibold"}
                 labelTextClassname={"text-[18px] leading-[8px] font-semibold"}
                 labelText={(value) => {
@@ -257,7 +259,7 @@ const FullPage = () => {
             </div>
           </section>
 
-          {/* <UiDivider :className=s="'bg-[#2E2E2E]'" /> */}
+          {/* <UiDivider :className=s=""bg-[#2E2E2E]"" /> */}
 
           <section className="flex w-full bg-[#0B0B0B] rounded-3xl overflow-hidden">
             <div className="flex flex-col gap-10 w-[380px] px-8 py-12">

@@ -7,6 +7,7 @@ export const RingProgress = (props) => {
     width = 350,
     scoreTextClassname = "",
     labelTextClassname = "",
+    ringClassname = "",
     labelText,
     showScoreText = true,
     smooth = true,
@@ -42,7 +43,7 @@ export const RingProgress = (props) => {
         width={width}
         height={wrapperHeight()}
         viewBox="0 170 350 175"
-        className="origin-center -rotate-180 fill-transparent"
+        className={["origin-center -rotate-180 fill-transparent", ringClassname].join(" ")}
         strokeLinecap="round"
         strokeWidth="23.975"
       >
@@ -60,7 +61,7 @@ export const RingProgress = (props) => {
         width={width}
         height={wrapperHeight()}
         viewBox="0 170 350 175"
-        className="absolute top-0 origin-center -rotate-180 fill-transparent stroke-current"
+        className={["absolute top-0 origin-center -rotate-180 fill-transparent stroke-current", ringClassname].join(" ")}
         strokeLinecap="round"
         strokeWidth="23.975"
       >

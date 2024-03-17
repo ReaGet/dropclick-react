@@ -11,11 +11,17 @@ export default class GuideService {
     }
   }
 
-  static async getById({ email, guideId }) {
+  static async getById({ email, guideId }, includeTasks = false) {
+    const payload = { email, guideId };
+
+    if (includeTasks) {
+      payload["includeTasks"] = true;
+    }
+
     try {
       return await fetch("https://dropclick.pro/base/getGuideCards.php", {
         method: "POST",
-        body: JSON.stringify({ email, guideId }),
+        body: JSON.stringify(payload),
       }).then(res => res.json());
     } catch(e) {
       console.log("Error while fetching single guide:", e);
@@ -28,6 +34,17 @@ export default class GuideService {
         .then(res => res.json());
     } catch(e) {
       console.log("Error while fetching categories:", e);
+    }
+  }
+
+  static async getTaskContent({ id }) {
+    try {
+      return await fetch("https://dropclick.pro/base/getTaskContent.php", {
+        method: "POST",
+        body: JSON.stringify({ id }),
+      }).then(res => res.json());
+    } catch(e) {
+      console.log("Error while fetching task content:", e);
     }
   }
 

@@ -1,19 +1,43 @@
 import { useState } from "react";
+import GuideService from "services/GuideService";
 
 const Task = (props) => {
   const {
-    isDone = false,
+    task,
   } = props;
 
   const [isOpen, setIsOpen] = useState(false);
+  const [content, setContent] = useState("");
+
+  let isLoading = false;
+
+  const handleClick = () => {
+    // if (!content) return;
+
+    // isLoading = true;
+    if (!content) {
+      if (isLoading) {
+        return;
+      }
+
+      GuideService.getTaskContent({ id: task.id }).then((result) => {
+        setContent(result.data);
+        setIsOpen(true);
+      });
+
+      isLoading = true;
+    } else {
+      setIsOpen(!isOpen);
+    }
+  }
 
   return (
     <article className="w-full bg-[#0D0D0D] rounded-xl lg:rounded-3xl">
       <div
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleClick}
         className="flex items-center gap-6 w-full px-10 py-8 hover:bg-[#131313] cursor-pointer rounded-xl lg:rounded-3xl"
       >
-        { isDone ? (
+        { task.isDone ? (
             <svg className="w-10 h-10 lg:w-auto lg:h-auto" width="24" height="24">
               <use xlinkHref="/assets/icons/sprites.svg#check"></use>
             </svg>
@@ -22,7 +46,8 @@ const Task = (props) => {
           )
         }
         
-        <h2 className="text-xl font-bold select-none">Получение тестовых токенов</h2>
+        <h2 className="text-xl font-bold select-none">{task.title}</h2>
+        
         <svg
           className={[
             "ml-auto transition-transform",
@@ -41,12 +66,14 @@ const Task = (props) => {
       <div
         className={[
           "flex flex-col items-center gap-8 p-10",
-          isOpen ? "flex" : "hidden"
+          isOpen && content ? "flex" : "hidden"
         ].join(" ")}
       >
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, debitis praesentium! Excepturi corrupti voluptatibus, quisquam odio inventore esse necessitatibus sint repudiandae? Facere aliquam voluptatum inventore nihil minus, dolores adipisci aperiam?</div>
+        <div
+          dangerouslySetInnerHTML={{__html: content}}
+        ></div>
         <button  className="flex items-center gap-6 rounded-full text-xl">
-          { isDone ? (
+          { task.isDone ? (
               <svg className="w-10 h-10 lg:w-auto lg:h-auto" width="24" height="24">
                 <use xlinkHref="/assets/icons/sprites.svg#check"></use>
               </svg>
@@ -66,8 +93,10 @@ export const TaskList = (props) => {
   } = props;
 
   return (
-    <section className="flex w-full">
-      <Task />
+    <section className="flex flex-col gap-8 w-full">
+      { tasks?.map((task) => {
+        return <Task key={task.id} task={task} />
+      })}
     </section>
   );
 };

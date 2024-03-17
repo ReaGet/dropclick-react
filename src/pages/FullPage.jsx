@@ -110,6 +110,7 @@ const FullPage = () => {
   const [descExpanded, setDescExpanded] = useState(false);
   const [isLongContent, setIsLongContent] = useState(false);
   const [isFavorite, setIsFavorite] = useState(guide.isFavorite);
+  const [doneTasks, setDoneTasks] = useState([]);
 
   useEffect(() => {
     setIsLongContent(
@@ -119,9 +120,14 @@ const FullPage = () => {
 
   useEffect(() => {
     try {
-      GuideService.getById({ email: user.email, guideId: id }).then((result) => {
+      GuideService.getById({ email: user.email, guideId: id }, true).then((result) => {
         setIsFavorite(result.isFavorite);
+        setDoneTasks(result.tasks.reduce((_doneTasks, { id, isDone }) => {
+          _doneTasks[id] = isDone;
+          return _doneTasks;
+        }, {}));
         setGuide(result);
+        console.log(result)
       });
     } catch(e) {
       console.log("Error:", e)
@@ -264,7 +270,7 @@ const FullPage = () => {
 
           <div className="w-full h-[1px] my-8 bg-[#2E2E2E]"></div>
 
-          <TaskList />
+          <TaskList tasks={guide.tasks} />
 
         </div>
       </main>

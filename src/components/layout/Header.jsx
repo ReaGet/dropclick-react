@@ -44,7 +44,7 @@ export const Header = () => {
             </div>
           )}
           
-          { location.pathname !== "/" && <Link className="button-outline md:hidden px-6 py-4 rounded-full text-2xl md:text-xl lg:text-[14px] text-white" tp="/">Перейти в агрегатор</Link> }
+          { location.pathname !== "/" && <Link className="button-outline md:hidden px-6 py-4 rounded-full text-2xl md:text-xl lg:text-[14px] text-white" to="/">Перейти в агрегатор</Link> }
         </div>
 
         {user && (

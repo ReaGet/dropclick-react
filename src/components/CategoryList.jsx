@@ -16,7 +16,7 @@ const Category = (props) => {
   return (
     <button
       className={[
-          "px-8 py-4 xl:px-10 lg:font-semibold border rounded-xl transition-colors outline-none",
+          "px-8 py-4 xl:px-10 font-semibold border rounded-xl transition-colors outline-none",
           selected
             ? "bg-primary text-black border-primary hover:border-primary-hover"
             : "border-[#414347] hover:border-white"

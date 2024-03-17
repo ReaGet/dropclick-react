@@ -8,6 +8,7 @@ import GuideService from "services/GuideService";
 import { FavoriteButton } from "components/ui/FavoriteButton";
 import { GuideLinks } from "components/guide/GuideLinks";
 import { ScrollToTop } from "components/ScrollTop";
+import { TaskList } from "components/guide/TaskList";
 
 const FullPage = () => {
   const { id } = useParams();
@@ -261,18 +262,9 @@ const FullPage = () => {
             </div>
           </section>
 
-          {/* <UiDivider :className=s=""bg-[#2E2E2E]"" /> */}
+          <div className="w-full h-[1px] my-8 bg-[#2E2E2E]"></div>
 
-          <section className="flex w-full bg-[#0B0B0B] rounded-3xl overflow-hidden">
-            <div className="flex flex-col gap-10 w-[380px] px-8 py-12">
-              <button className="px-8 py-7 bg-[#111111] text-xl text-left rounded-3xl cursor-pointer">Получение тестовых токенов</button>
-              <button className="px-8 py-7 bg-[#111111] text-xl text-left rounded-3xl cursor-pointer">Прохождение тестнета</button>
-              <button className="px-8 py-7 bg-[#111111] text-xl text-left rounded-3xl cursor-pointer">Merkly - Создание контракта</button>
-            </div>
-            <div className="flex-grow min-h-full bg-[#111111]">
-
-            </div>
-          </section>
+          <TaskList />
 
         </div>
       </main>

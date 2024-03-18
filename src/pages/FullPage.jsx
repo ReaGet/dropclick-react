@@ -39,7 +39,7 @@ const FullPage = () => {
         setGuide(result);
       });
     } catch(e) {
-      console.log("Error:", e)
+      console.log("Error while fetching guide:", e)
     }
   }, []);
 

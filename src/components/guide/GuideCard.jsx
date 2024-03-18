@@ -35,8 +35,8 @@ export const GuideCard = ({ guide, onFavoriteChange, isFavoriteItem }) => {
             
             <FavoriteButton
               isFavorite={isFavoriteItem}
-              width={19}
-              height={19}
+              width={20}
+              height={20}
               onClick={handleFavoriteClick}
               className={"flex items-center justify-center w-[26px] h-[26px] border border-current rounded-full"}
             />

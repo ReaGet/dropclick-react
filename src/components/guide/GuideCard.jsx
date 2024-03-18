@@ -3,7 +3,10 @@ import { RingProgress } from "../ui/RingProgress";
 import { FavoriteButton } from "components/ui/FavoriteButton";
 
 export const GuideCard = ({ guide, onFavoriteChange, isFavoriteItem }) => {
-  const getProgress = () => (parseInt(guide.progress) || 0).toFixed();
+  const getProgress = () => {
+    const value = (parseInt(guide.progress) || 0).toFixed();
+    return Math.max(0, Math.min(value, 100));
+  }
 
   const handleFavoriteClick = async (event) => {
     event.preventDefault();
@@ -19,18 +22,24 @@ export const GuideCard = ({ guide, onFavoriteChange, isFavoriteItem }) => {
         className="flex flex-col gap-8"
       >
         <div className="flex justify-between">
-          <div className="py-3 px-5 xl:py-4 text-md xl:text-[12px] leading-[12px] font-bold uppercase border border-[#414347] rounded-3xl cursor-default">
+          <div className="py-3 px-5 xl:py-4 text-md xl:text-[12px] leading-[12px] font-bold border border-[#414347] rounded-3xl cursor-default">
             { guide.category }
           </div>
 
           <div className="flex items-center gap-4">
             { guide.hit && (
-              <svg className="cursor-default" width="24" height="24" onClick={e => e.preventDefault()}>
+              <svg className="cursor-default" width="26" height="26" onClick={e => e.preventDefault()}>
                 <use xlinkHref="/assets/icons/sprites.svg#hit"></use>
               </svg>
             )}
             
-            <FavoriteButton isFavorite={isFavoriteItem} width={24} height={24} onClick={handleFavoriteClick} />
+            <FavoriteButton
+              isFavorite={isFavoriteItem}
+              width={19}
+              height={19}
+              onClick={handleFavoriteClick}
+              className={"flex items-center justify-center w-[26px] h-[26px] border border-current rounded-full"}
+            />
           </div>
         </div>
 

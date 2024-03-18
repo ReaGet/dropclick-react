@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 import { Layout } from "layouts/default";
 import { RingProgress } from "components/ui/RingProgress";
@@ -22,6 +22,8 @@ const FullPage = () => {
   const [doneTasks, setDoneTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     setIsLongContent(
       (guide.content?.length || 0) > 425
@@ -31,6 +33,11 @@ const FullPage = () => {
   useEffect(() => {
     try {
       GuideService.getById({ email: user.email, guideId: id }, true).then((result) => {
+        console.log(result)
+        if (Array.isArray(result)) {
+          navigate("/");
+          return;
+        }
         setIsFavorite(result.isFavorite);
         setDoneTasks(result.tasks.reduce((_doneTasks, { id, isDone }) => {
           _doneTasks[id] = isDone;

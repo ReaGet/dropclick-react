@@ -10,6 +10,8 @@ export const Header = () => {
   const { user } = useAuth();
   const location = useLocation();
 
+  console.log(location)
+
   useClickOutside(rootRef, () => {
     setNavOpened(false);
   });
@@ -29,13 +31,16 @@ export const Header = () => {
           ].join(" ")}
         >
           <nav
-            className="flex flex-col md:flex-row flex-1 items-center justify-center gap-8 lg:gap-16 text-2xl md:text-xl text-white"
+            className="flex flex-col md:flex-row flex-1 items-center justify-center gap-8 lg:gap-16 text-2xl md:text-[13px] lg:text-[14px] text-[#e4e4e4]"
           >
-            <a className="[&.js-active]:text-white hover:text-primary transition-colors" href="/">Главная</a>
-            <a className="[&.js-active]:text-white hover:text-primary transition-colors" href="/#about">О сервисе</a>
-            <a className="[&.js-active]:text-white hover:text-primary transition-colors" href="https://dropclick.pro/results/">Результаты</a>
-            <a className="[&.js-active]:text-white hover:text-primary transition-colors" href="/#how">Как это работает?</a>
-            <a className="[&.js-active]:text-white hover:text-primary transition-colors" href="/#contacts">Контакты</a>
+            <a className={[
+              "[&.js-active]:text-primary [&.js-active]:font-semibold hover:text-primary transition-colors",
+              location.pathname === "/" ? "js-active" : "",
+            ].join(" ")} href="/">Главная</a>
+            <a className="[&.js-active]:text-primary [&.js-active]:font-semibold hover:text-primary transition-colors" href="https://dropclick.pro/#about">О сервисе</a>
+            <a className="[&.js-active]:text-primary [&.js-active]:font-semibold hover:text-primary transition-colors" href="https://dropclick.pro/results/">Результаты</a>
+            <a className="[&.js-active]:text-primary [&.js-active]:font-semibold hover:text-primary transition-colors" href="https://dropclick.pro/#how">Как это работает?</a>
+            <a className="[&.js-active]:text-primary [&.js-active]:font-semibold hover:text-primary transition-colors" href="https://dropclick.pro/#contacts">Контакты</a>
           </nav>
 
           {!user && (

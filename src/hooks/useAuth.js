@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
 import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "services/Firebase";
+import { useLocation } from "react-router-dom";
 import SubscribitionService from "services/Subscribition";
 
 const AuthContext = createContext();
@@ -9,8 +10,9 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", null);
   const navigate = useNavigate();
+  const location = useLocation()
 
-  const loadSubscibition = () => {
+  const loadSubscribition = async () => {
     if (!user) return;
     SubscribitionService.getByEmail(user.email).then((result) => {
       setUser({ ...user, subscribitions: result });
@@ -18,16 +20,12 @@ export const AuthProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    loadSubscibition();
-  }, []);
-
-  // const subscibitions = await SubscribitionService.getByEmail(user.email).then((res) => res.json());
-  // console.log(subscibitions)
+    loadSubscribition();
+  }, [location]);
 
   const login = async (email, password) => {
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
-      loadSubscibition();
       setUser(user);
       return {
         success: true,

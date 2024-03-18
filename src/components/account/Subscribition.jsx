@@ -1,7 +1,10 @@
+import { SubscribitionModal } from "components/modals/SubscribitionModal";
 import useDateFormatter from "hooks/useDateFormatter";
+import { useState } from "react";
 
 export const Subscribition = ({ subscribition }) => {
   const formatter = useDateFormatter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <section className="flex flex-col">
@@ -30,7 +33,19 @@ export const Subscribition = ({ subscribition }) => {
             readOnly
           />
         </label>
+
+        <button
+          className="px-16 py-6 mr-auto bg-primary hover:bg-primary-hover text-black text-xl font-semibold rounded-xl"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Купить подписку
+        </button>
       </div>
+
+      <SubscribitionModal
+        isModalOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </section>
   )
 };

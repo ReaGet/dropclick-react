@@ -49,8 +49,3 @@ export const Payment = (props) => {
     </>
   )
 }
-
-
-// adress:"TEp6UBYT8waZstCqiPUFBtTnvGR6h68pE9"
-// id:"1"
-// perev:"TRC20"

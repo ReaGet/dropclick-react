@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { useAuth } from "hooks/useAuth";
-import { Layout } from 'layouts/default';
-import { PersonalInfo } from 'components/account/PersonalInfo';
-import { Subscribition } from 'components/account/Subscribition';
-import { Security } from 'components/account/Security';
-import SubscribitionService from 'services/Subscribition';
+import { Layout } from "layouts/default";
+import { PersonalInfo } from "components/account/PersonalInfo";
+import { Subscribition } from "components/account/Subscribition";
+import { Security } from "components/account/Security";
 
 const AccountPage = () => {
   const [currentTab, setCurrentTab] = useState("personal-info");
   const { user } = useAuth();
 
-  const [userSubscribition, setUserSubscribition] = useState({ date: "", nach: ""});
+  const [subscribition, setSubscribition] = useState({ date: "", nach: ""});
 
   useEffect(() => {
-    if (user.subscribitions.length) {
-      setUserSubscribition(user.subscribitions[0]);
+    if (user?.subscribitions?.length) {
+      setSubscribition(user.subscribitions[0]);
     }
-  }, []);
+  }, [user.subscribitions]);
 
   const TABS = {
     PERSONAL: "personal-info",
@@ -34,7 +33,7 @@ const AccountPage = () => {
     {
       title: "Подписка",
       slug: TABS.SUBS,
-      component: <Subscribition subscribition={userSubscribition} />,
+      component: <Subscribition subscribition={subscribition} />,
     },
     {
       title: "Безопасность",
@@ -47,7 +46,7 @@ const AccountPage = () => {
     <Layout>
       <div className="container flex flex-col md:flex-row gap-8 text-white">
         <aside className="scrollbar flex flex-col items-center gap-20 w-full md:w-[300px] md:px-6 pb-4 pt-8 md:pb-8 rounded-2xl md:bg-[#0B0B0B] md:border border-[#202020]">
-          <div className="hidden md:flex flex-col items-center gap-6">
+          <div className="flex flex-col items-center gap-6">
             <div className="flex items-center justify-center w-40 h-40 rounded-full border">
               <svg className="fill-white" width="50" height="50">
                 <use xlinkHref="/assets/icons/sprites.svg#profile"></use>

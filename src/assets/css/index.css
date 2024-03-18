@@ -67,3 +67,7 @@ html {
     background-position: 0 50%;
   }
 }
+
+.task__content img {
+  @apply my-6;
+}

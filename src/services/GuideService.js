@@ -48,6 +48,17 @@ export default class GuideService {
     }
   }
 
+  static async updateTaskCompletion({ email, name, title }) {
+    try {
+      return await fetch("https://dropclick.pro/base/updateTaskCompletion.php", {
+        method: "POST",
+        body: JSON.stringify({ email, name, title }),
+      }).then(res => res.json());
+    } catch(e) {
+      console.log("Error while update task completion:", e);
+    }
+  }
+
   static async setGuideFavorite({ email, name } ) {
     try {
       return await fetch("https://dropclick.pro/base/addToFavorite.php", {

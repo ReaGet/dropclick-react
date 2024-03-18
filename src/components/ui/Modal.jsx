@@ -5,6 +5,7 @@ export const Modal = (props) => {
     children,
     isOpen,
     onClose,
+    className = "bg-black",
     title = "",
   } = props;
 
@@ -35,10 +36,13 @@ export const Modal = (props) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative flex flex-col gap-6 min-w-[300px] min-h-[150px] bg-black p-6 md:p-8 rounded-2xl border border-[#2b2b2b]"
+        className={[
+          "relative flex flex-col gap-6 min-w-[300px] min-h-[150px] p-6 md:p-8 rounded-2xl border border-[#2b2b2b]",
+          className
+        ].join(" ")}
       >
         <div className="flex items-center h-12">
-          <span>{title}</span>
+          <span className="text-3xl text-white font-bold">{title}</span>
           <button
             onClick={onClose}
             className="absolute flex items-center justify-center w-12 h-12 right-4 top-4"

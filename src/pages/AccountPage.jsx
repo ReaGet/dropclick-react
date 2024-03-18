@@ -13,12 +13,9 @@ const AccountPage = () => {
   const [userSubscribition, setUserSubscribition] = useState({ date: "", nach: ""});
 
   useEffect(() => {
-    SubscribitionService.getByEmail(user.email).then((result) => {
-      setUserSubscribition({
-        ...userSubscribition,
-        ...result[0],
-      });
-    });
+    if (user.subscribitions.length) {
+      setUserSubscribition(user.subscribitions[0]);
+    }
   }, []);
 
   const TABS = {

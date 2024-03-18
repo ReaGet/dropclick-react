@@ -1,20 +1,31 @@
+import { useAuth } from "hooks/useAuth";
 import { useState } from "react";
 import GuideService from "services/GuideService";
 
 const Task = (props) => {
   const {
     task,
+    guideTitle,
+    onPermissionError,
   } = props;
 
+  const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState("");
+  const [isDone, setIsDone] = useState(task.isDone);
 
   let isLoading = false;
 
-  const handleClick = () => {
-    // if (!content) return;
+  const handleClick = (event) => {
+    if (event.target.classList.contains("checkbox")) {
+      return;
+    }
 
-    // isLoading = true;
+    if (!user?.subscribitions?.length) {
+      onPermissionError();
+      return;
+    }
+
     if (!content) {
       if (isLoading) {
         return;
@@ -31,18 +42,33 @@ const Task = (props) => {
     }
   }
 
+  const updateCompletion = () => {
+    if (!user?.subscribitions?.length) {
+      onPermissionError();
+      return;
+    }
+
+    GuideService.updateTaskCompletion({
+      email: user.email,
+      name: guideTitle,
+      title: task.title,
+    }).then((result) => {
+      setIsDone(result.status);
+    });
+  };
+
   return (
     <article className="w-full bg-[#0D0D0D] rounded-xl lg:rounded-3xl">
       <div
         onClick={handleClick}
         className="flex items-center gap-6 w-full px-10 py-8 hover:bg-[#131313] cursor-pointer rounded-xl lg:rounded-3xl"
       >
-        { task.isDone ? (
-            <svg className="w-10 h-10 lg:w-auto lg:h-auto" width="24" height="24">
+        { isDone ? (
+            <svg onClick={updateCompletion} className="checkbox shrink-0 w-10 h-10 lg:w-auto lg:h-auto" width="24" height="24">
               <use xlinkHref="/assets/icons/sprites.svg#check"></use>
             </svg>
           ) : (
-            <div className="w-10 h-10 rounded-full border border-[#7B7B7B]"></div>
+            <div onClick={updateCompletion} className="checkbox shrink-0 w-10 h-10 rounded-full border border-[#7B7B7B]"></div>
           )
         }
         
@@ -65,16 +91,16 @@ const Task = (props) => {
 
       <div
         className={[
-          "flex flex-col items-center gap-8 p-10",
+          "task__content flex flex-col items-center gap-8 p-10 text-xl",
           isOpen && content ? "flex" : "hidden"
         ].join(" ")}
       >
         <div
           dangerouslySetInnerHTML={{__html: content}}
         ></div>
-        <button  className="flex items-center gap-6 rounded-full text-xl">
-          { task.isDone ? (
-              <svg className="w-10 h-10 lg:w-auto lg:h-auto" width="24" height="24">
+        <button onClick={updateCompletion} className="flex items-center gap-6 rounded-full text-xl">
+          { isDone ? (
+              <svg  className="w-10 h-10 lg:w-auto lg:h-auto" width="24" height="24">
                 <use xlinkHref="/assets/icons/sprites.svg#check"></use>
               </svg>
             ) : (
@@ -90,12 +116,14 @@ const Task = (props) => {
 export const TaskList = (props) => {
   const {
     tasks,
+    guideTitle,
+    onPermissionError,
   } = props;
 
   return (
     <section className="flex flex-col gap-8 w-full">
       { tasks?.map((task) => {
-        return <Task key={task.id} task={task} />
+        return <Task key={task.id} task={task} guideTitle={guideTitle} onPermissionError={onPermissionError} />
       })}
     </section>
   );

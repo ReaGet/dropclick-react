@@ -2,7 +2,7 @@ import useDateFormatter from "hooks/useDateFormatter";
 
 export const Subscribition = ({ subscribition }) => {
   const formatter = useDateFormatter();
-  
+
   return (
     <section className="flex flex-col">
       <h2 className="mb-4 text-4xl font-semibold">Подписка</h2>

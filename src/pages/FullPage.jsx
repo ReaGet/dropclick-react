@@ -9,6 +9,7 @@ import { FavoriteButton } from "components/ui/FavoriteButton";
 import { GuideLinks } from "components/guide/GuideLinks";
 import { ScrollToTop } from "components/ScrollTop";
 import { TaskList } from "components/guide/TaskList";
+import { SubscribitionModal } from "components/modals/SubscribitionModal";
 
 const FullPage = () => {
   const { id } = useParams();
@@ -111,6 +112,7 @@ const FullPage = () => {
   const [isLongContent, setIsLongContent] = useState(false);
   const [isFavorite, setIsFavorite] = useState(guide.isFavorite);
   const [doneTasks, setDoneTasks] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setIsLongContent(
@@ -127,7 +129,6 @@ const FullPage = () => {
           return _doneTasks;
         }, {}));
         setGuide(result);
-        console.log(result)
       });
     } catch(e) {
       console.log("Error:", e)
@@ -142,6 +143,10 @@ const FullPage = () => {
       setIsFavorite(status);
     });
   };
+
+  const onPermissionError = () => {
+    setIsModalOpen(true);
+  }
 
   return (
     <Layout>
@@ -270,10 +275,19 @@ const FullPage = () => {
 
           <div className="w-full h-[1px] my-8 bg-[#2E2E2E]"></div>
 
-          <TaskList tasks={guide.tasks} />
+          <TaskList
+            guideTitle={guide.title}
+            tasks={guide.tasks}
+            onPermissionError={onPermissionError}
+          />
 
         </div>
       </main>
+
+      <SubscribitionModal
+        isModalOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </Layout>
   )
 }

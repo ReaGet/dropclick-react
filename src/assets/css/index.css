@@ -71,3 +71,17 @@ html {
 .task__content img {
   @apply my-6;
 }
+
+.guide__description a,
+.task__content a {
+  color: #eccf4d;
+  text-decoration: underline;
+}
+
+.guide__description p + p {
+  @apply mt-6;
+}
+
+.task__content p + p {
+  @apply mt-2;
+}

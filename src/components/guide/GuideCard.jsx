@@ -47,7 +47,7 @@ export const GuideCard = ({ guide, onFavoriteChange, isFavoriteItem }) => {
           <div className="flex flex-1 flex-col">
             <h2 className="text-2xl leading-[1.5rem] font-semibold">{ guide.title }</h2>
 
-            <p className="mt-6 text-base text-[#cdcdcd] line-clamp-3">Pyth предоставляет рыночные данные в реальном времени финансовым приложениям dApps на 40+ блокчейнах</p>
+            <p className="mt-6 text-base text-[#cdcdcd] line-clamp-3">{ guide.description }</p>
 
             <div className="flex flex-col mt-auto text-lg xl:text-xl whitespace-nowrap">
               <div className="mt-4">

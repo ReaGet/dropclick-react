@@ -83,5 +83,5 @@ html {
 }
 
 .task__content p + p {
-  @apply mt-2;
+  @apply mt-6;
 }

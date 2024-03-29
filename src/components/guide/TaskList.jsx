@@ -72,7 +72,7 @@ const Task = (props) => {
           )
         }
         
-        <h2 className="text-xl font-bold select-none">{task.title}</h2>
+        <h2 className="text-2xl font-bold select-none">{task.title}</h2>
         
         <svg
           className={[
@@ -91,7 +91,7 @@ const Task = (props) => {
 
       <div
         className={[
-          "task__content flex flex-col items-center gap-8 p-10 text-xl",
+          "task__content flex flex-col items-center gap-8 p-10 text-2xl",
           isOpen && content ? "flex" : "hidden"
         ].join(" ")}
       >

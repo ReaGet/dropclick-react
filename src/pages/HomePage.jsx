@@ -5,6 +5,8 @@ import { GuideList } from "components/guide/GuideList";
 import { Filters } from "components/Filters";
 import GuideService from "services/GuideService";
 import { useGuides } from "hooks/useGuides";
+import { SubscribitionModalEnded } from "components/modals/SubscribitionModalEnded";
+import { useLocation } from "react-router-dom";
 
 export const HomepageContext = createContext();
 
@@ -15,6 +17,9 @@ const HomePage = () => {
   const [isGuidesLoading, setIsGuidesLoading] = useState(false);
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(false);
   const [favoriteGuides, setFavoriteGuides] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const [filter, setFilter] = useState({
     sort: "",
@@ -37,6 +42,12 @@ const HomePage = () => {
   }
 
   useEffect(() => {
+    if (params.get("expired") == 1) {
+      setIsModalOpen(true);
+    }
+  }, [location.search]);
+
+  useEffect(() => {
     setIsCategoriesLoading(true);
     GuideService.getCategories().then((result) => {
       setCategories([
@@ -45,9 +56,7 @@ const HomePage = () => {
       ]);
       setIsCategoriesLoading(false);
     });
-  }, []);
 
-  useEffect(() => {
     setIsGuidesLoading(true);
     GuideService.getAll(user?.email).then((result) => {
       
@@ -106,6 +115,10 @@ const HomePage = () => {
           
         </div>
       </HomepageContext.Provider>
+      <SubscribitionModalEnded
+        isModalOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </Layout>
   )
 }

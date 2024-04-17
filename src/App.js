@@ -23,7 +23,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/guide/:id" element={
-          <PrivateRoute>
+          <PrivateRoute hasSubscribition={true}>
             <FullPage />
           </PrivateRoute>
         } />

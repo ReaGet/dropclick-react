@@ -22,6 +22,8 @@ const FullPage = () => {
   const [doneTasks, setDoneTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const isFinished = Math.random() > 0.5;
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -102,7 +104,7 @@ const FullPage = () => {
                 </div>
               </div>
 
-              <div className="flex gap-8 mt-8 text-lg text-white select-none whitespace-nowrap">
+              <div className="flex flex-wrap gap-8 mt-8 text-lg text-white select-none whitespace-nowrap">
                 <div className="flex items-center gap-4 px-6 py-3 bg-[#101010] rounded-xl cursor-default">
                   <svg className="stroke-current" width="18" height="18">
                     <use xlinkHref="/assets/icons/sprites.svg#time"></use>
@@ -115,6 +117,12 @@ const FullPage = () => {
                   </svg>
                   { guide?.price }
                 </div>
+
+                { isFinished && (
+                  <div className="flex items-center gap-4 px-6 py-3 bg-[#0D0600] border border-[#4F3015] rounded-xl cursor-default uppercase">
+                    Завершен
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-col items-center gap-4 mt-14 text-xl lg:text-2xl text-[#e4e4e4]">
@@ -191,6 +199,7 @@ const FullPage = () => {
           <div className="w-full h-[1px] my-8 bg-[#2E2E2E]"></div>
 
           <TaskList
+            isFinished={isFinished}
             guideTitle={guide.title}
             tasks={guide.tasks}
             onPermissionError={onPermissionError}

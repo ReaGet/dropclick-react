@@ -7,6 +7,7 @@ const Task = (props) => {
     task,
     guideTitle,
     onPermissionError,
+    isFinished
   } = props;
 
   const { user } = useAuth();
@@ -63,12 +64,14 @@ const Task = (props) => {
         onClick={handleClick}
         className="flex items-center gap-6 w-full px-10 py-8 hover:bg-[#131313] cursor-pointer rounded-xl lg:rounded-3xl"
       >
-        { isDone ? (
-            <svg onClick={updateCompletion} className="checkbox shrink-0 w-10 h-10 lg:w-auto lg:h-auto" width="24" height="24">
-              <use xlinkHref="/assets/icons/sprites.svg#check"></use>
-            </svg>
-          ) : (
-            <div onClick={updateCompletion} className="checkbox shrink-0 w-10 h-10 rounded-full border border-[#7B7B7B]"></div>
+        { !isFinished && (
+            isDone ? (
+              <svg onClick={updateCompletion} className="checkbox shrink-0 w-10 h-10 lg:w-auto lg:h-auto" width="24" height="24">
+                <use xlinkHref="/assets/icons/sprites.svg#check"></use>
+              </svg>
+            ) : (
+              <div onClick={updateCompletion} className="checkbox shrink-0 w-10 h-10 rounded-full border border-[#7B7B7B]"></div>
+            )
           )
         }
         
@@ -98,7 +101,7 @@ const Task = (props) => {
         <div
           dangerouslySetInnerHTML={{__html: content}}
         ></div>
-        <button onClick={updateCompletion} className="flex items-center gap-6 rounded-full text-xl">
+        { !isFinished && <button onClick={updateCompletion} className="flex items-center gap-6 rounded-full text-xl">
           { isDone ? (
               <svg  className="w-10 h-10 lg:w-auto lg:h-auto" width="24" height="24">
                 <use xlinkHref="/assets/icons/sprites.svg#check"></use>
@@ -107,7 +110,7 @@ const Task = (props) => {
               <div className="w-10 h-10 rounded-full border border-[#7B7B7B]"></div>
             )
           } Выполнено
-        </button>
+        </button> }
       </div>
     </article>
   );
@@ -118,12 +121,13 @@ export const TaskList = (props) => {
     tasks,
     guideTitle,
     onPermissionError,
+    isFinished,
   } = props;
 
   return (
     <section className="flex flex-col gap-8 w-full">
       { tasks?.map((task) => {
-        return <Task key={task.id} task={task} guideTitle={guideTitle} onPermissionError={onPermissionError} />
+        return <Task isFinished={isFinished} key={task.id} task={task} guideTitle={guideTitle} onPermissionError={onPermissionError} />
       })}
     </section>
   );

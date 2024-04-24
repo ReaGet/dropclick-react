@@ -13,9 +13,14 @@ export const GuideCard = ({ guide, onFavoriteChange, isFavoriteItem }) => {
     onFavoriteChange(guide);
   };
 
+  const isFinished = Math.random() > 0.5;
+
   return (
     <article
-      className="p-8 text-white bg-[#15171C] rounded-2xl cursor-pointer sm:hover:scale-105 transition-transform duration-300"
+      className={[
+        "p-8 text-white border rounded-2xl cursor-pointer sm:hover:scale-105 transition-transform duration-300",
+        isFinished ? "bg-[#0D0600] border-[#4F3015]" : "bg-[#15171C] border-[#15171C]"
+      ].join(" ")}
     >
       <Link
         to={`/guide/${guide.id}`}
@@ -25,6 +30,12 @@ export const GuideCard = ({ guide, onFavoriteChange, isFavoriteItem }) => {
           <div className="py-3 px-5 xl:py-4 text-md xl:text-[12px] leading-[12px] font-bold border border-[#414347] rounded-3xl cursor-default">
             { guide.category }
           </div>
+
+          { isFinished && (
+            <div className="py-3 px-5 xl:py-4 mr-auto ml-5 text-md xl:text-[12px] text-[#FF7A00] leading-[12px] border border-[#4F3015] rounded-3xl cursor-default uppercase">
+              Завершен
+            </div>
+          )}
 
           <div className="flex items-center gap-4">
             { guide.hit && (
@@ -77,7 +88,10 @@ export const GuideCard = ({ guide, onFavoriteChange, isFavoriteItem }) => {
               <span>Прогресс:</span>
               <span>{ getProgress() }%</span>
             </div>
-            <div className="w-full h-8 bg-[#0F1114] rounded-lg">
+            <div className={[
+              "w-full h-8 rounded-lg",
+              isFinished ? "bg-black" : "bg-[#0F1114]"
+            ].join(" ")}>
               <div
                 style={{width: `${getProgress()}%`}}
                 className="h-full bg-gradient-to-r from-[#ECCF4D] to-[#C2944E] rounded-lg"

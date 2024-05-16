@@ -5,8 +5,8 @@ import { GuideList } from "components/guide/GuideList";
 import { Filters } from "components/Filters";
 import GuideService from "services/GuideService";
 import { useGuides } from "hooks/useGuides";
-import { SubscribitionModalEnded } from "components/modals/SubscribitionModalEnded";
-import { useLocation } from "react-router-dom";
+import { SubscribitionModalStatus } from "components/modals/SubscribitionModalStatus";
+import { useLocation, Link } from "react-router-dom";
 
 export const HomepageContext = createContext();
 
@@ -17,7 +17,8 @@ const HomePage = () => {
   const [isGuidesLoading, setIsGuidesLoading] = useState(false);
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(false);
   const [favoriteGuides, setFavoriteGuides] = useState({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubModalOpen, setIsSubModalOpen] = useState(false);
+  const [subscribitionStatus, setSubscribitionStatus] = useState("");
   const location = useLocation();
   const params = new URLSearchParams(location.search);
 
@@ -42,10 +43,11 @@ const HomePage = () => {
   }
 
   useEffect(() => {
-    if (params.get("expired") == 1) {
-      setIsModalOpen(true);
+    if (params.get("substatus")) {
+      setIsSubModalOpen(true);
+      setSubscribitionStatus(params.get("substatus"));
     }
-  }, [location.search]);
+  }, [location]);
 
   useEffect(() => {
     setIsCategoriesLoading(true);
@@ -115,10 +117,25 @@ const HomePage = () => {
           
         </div>
       </HomepageContext.Provider>
-      <SubscribitionModalEnded
-        isModalOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      <SubscribitionModalStatus
+        isModalOpen={isSubModalOpen}
+        onClose={() => setIsSubModalOpen(false)}
+      >
+        {
+          subscribitionStatus === "expired"
+            ? (
+              <div className="flex flex-col gap-6 w-full max-w-[700px] sm:px-8 text-xl sm:text-2xl text-white text-center">
+                <span>Ваша подписка истекла.</span>
+                <span>Вы можете продлить её в <Link to="/account" className="text-primary">личном кабинете</Link></span>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-6 w-full max-w-[700px] sm:px-8 text-xl sm:text-2xl text-white text-center">
+                <span>У вас нет прав для просмотра гайдов.</span>
+                <span>Вы можете приобрести подписку <Link to="/account" className="text-primary">личном кабинете</Link></span>
+              </div>
+            )
+        }
+      </SubscribitionModalStatus>
     </Layout>
   )
 }

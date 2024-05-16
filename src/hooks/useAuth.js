@@ -16,15 +16,16 @@ export const AuthProvider = ({ children }) => {
     if (!user) return;
     SubscribitionService.getByEmail(user.email).then((result) => {
       setUser({ ...user, subscribitions: result });
-      if (result === false) {
-        navigate("/?expired=1", { replace: true });
-      }
+      // const subInfo = result[0];
+      // if (subInfo.status !== "exists") {
+      //   navigate(`/?substatus=${subInfo.status}`, { replace: true });
+      // }
     });
   }
 
   useEffect(() => {
     loadSubscribition();
-  }, [location]);
+  }, []);
 
   const login = async (email, password) => {
     try {

@@ -13,7 +13,8 @@ export const GuideCard = ({ guide, onFavoriteChange, isFavoriteItem }) => {
     onFavoriteChange(guide);
   };
 
-  const isFinished = Math.random() > 0.5;
+  const isFinished = false;
+  // const isFinished = Math.random() > 0.5;
 
   return (
     <article

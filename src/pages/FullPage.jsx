@@ -22,7 +22,8 @@ const FullPage = () => {
   const [doneTasks, setDoneTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const isFinished = Math.random() > 0.5;
+  const isFinished = false;
+  // const isFinished = Math.random() > 0.5;
 
   const navigate = useNavigate();
 
@@ -35,7 +36,6 @@ const FullPage = () => {
   useEffect(() => {
     try {
       GuideService.getById({ email: user.email, guideId: id }, true).then((result) => {
-        console.log(result)
         if (Array.isArray(result)) {
           navigate("/");
           return;

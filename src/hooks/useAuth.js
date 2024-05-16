@@ -10,12 +10,15 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", null);
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
 
   const loadSubscribition = async () => {
     if (!user) return;
     SubscribitionService.getByEmail(user.email).then((result) => {
       setUser({ ...user, subscribitions: result });
+      if (result === false) {
+        navigate("/?expired=1", { replace: true });
+      }
     });
   }
 

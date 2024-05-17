@@ -13,7 +13,6 @@ export const AuthProvider = ({ children }) => {
   const location = useLocation();
 
   const loadSubscribition = async (_user) => {
-    console.log(1111, _user)
     if (!_user) return;
     SubscribitionService.getByEmail(_user.email).then((result) => {
       setUser({ ..._user, subscribitions: result });

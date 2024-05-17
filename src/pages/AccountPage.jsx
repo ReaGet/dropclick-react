@@ -13,7 +13,7 @@ const AccountPage = () => {
 
   useEffect(() => {
     if (user?.subscribitions?.length) {
-      setSubscribition(user.subscribitions[0]);
+      setSubscribition(user?.subscribitions[0]);
     }
   }, [user.subscribitions]);
 

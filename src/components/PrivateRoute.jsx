@@ -7,7 +7,9 @@ export const PrivateRoute = ({ children, hasSubscribition }) => {
     return <Navigate replace to="/login" />;
   }
 
-  const subscribition = user.subscribitions[0];
+  console.log(user)
+
+  const subscribition = user?.subscribitions[0];
 
   if (hasSubscribition && subscribition && subscribition.status !== "exists") {
     return <Navigate replace to={`/?substatus=${subscribition.status}`} />;

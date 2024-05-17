@@ -12,25 +12,22 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const loadSubscribition = async () => {
-    if (!user) return;
-    SubscribitionService.getByEmail(user.email).then((result) => {
-      setUser({ ...user, subscribitions: result });
-      // const subInfo = result[0];
-      // if (subInfo.status !== "exists") {
-      //   navigate(`/?substatus=${subInfo.status}`, { replace: true });
-      // }
+  const loadSubscribition = async (_user) => {
+    console.log(1111, _user)
+    if (!_user) return;
+    SubscribitionService.getByEmail(_user.email).then((result) => {
+      setUser({ ..._user, subscribitions: result });
     });
   }
 
   useEffect(() => {
-    loadSubscribition();
+    loadSubscribition(user);
   }, []);
 
   const login = async (email, password) => {
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
-      setUser(user);
+      await loadSubscribition(user);
       return {
         success: true,
         data: { user },
@@ -51,7 +48,7 @@ export const AuthProvider = ({ children }) => {
   const signup = async (email, password) => {
     try {
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
-      setUser(user);
+      await loadSubscribition(user);
       return {
         success: true,
         data: {

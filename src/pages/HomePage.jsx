@@ -130,8 +130,8 @@ const HomePage = () => {
               </div>
             ) : (
               <div className="flex flex-col gap-6 w-full max-w-[700px] sm:px-8 text-xl sm:text-2xl text-white text-center">
-                <span>У вас нет прав для просмотра гайдов.</span>
-                <span>Вы можете приобрести подписку <Link to="/account" className="text-primary">личном кабинете</Link></span>
+                <span>Для просмотра гайдов нужно приобрести подписку. </span>
+                <span>Вы можете сделать это в<Link to="/account" className="text-primary">личном кабинете</Link></span>
               </div>
             )
         }
